@@ -1,0 +1,19 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<FKIndexAssociation class="oracle.dbtools.crest.model.design.relational.FKIndexAssociation" directorySegmentName="seg_0" id="0A083506-62AF-AA6F-1125-AC8778ABB7BA" containerWithKeyObject="F8F53C3F-F5F3-EFFC-414D-1CF4D9E33DC3" localFKIndex="B051A51B-05EE-C141-4200-76D4346F5AF1" name="CD_REL_TB_FK2">
+<sourceConnName>CAMARA</sourceConnName>
+<sourceObjSchema>RECA_DB</sourceObjSchema>
+<sourceObjName>BAS_REL_TB_FK2</sourceObjName>
+<createdBy>user1</createdBy>
+<createdTime>2020-10-26 20:05:16 UTC</createdTime>
+<ownerDesignName>modelo</ownerDesignName>
+<referredTableLongName>RECA_DB.CD_TABLAS_ESTRUCTURA_JSON</referredTableLongName>
+<deleteRule>NO ACTION</deleteRule>
+<referredTableID>6B7FAF2E-D000-5CD5-EB85-216097F88F3D</referredTableID>
+<keyObject>6144096B-491F-ABD4-EF65-894084690A7A</keyObject>
+<referredKeyID>6144096B-491F-ABD4-EF65-894084690A7A</referredKeyID>
+<mandatory>true</mandatory>
+<refColNames>ID</refColNames>
+<transferable>true</transferable>
+<rely>false</rely>
+<columnDependencyConstraintGenerateInDDL>true</columnDependencyConstraintGenerateInDDL>
+</FKIndexAssociation>

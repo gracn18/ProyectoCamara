@@ -1,0 +1,30 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<TableSpaceOraclev10g class="oracle.dbtools.crest.model.design.storage.oracle.v10g.TableSpaceOraclev10g" name="COCADATA" directorySegmentName="seg_0" id="DEA2CA9F-D50F-553E-0A6C-53D58C4648E7">
+<sourceConnName>CAMARA</sourceConnName>
+<sourceObjName>COCADATA</sourceObjName>
+<createdBy>user1</createdBy>
+<createdTime>2020-10-26 17:06:12 UTC</createdTime>
+<ownerDesignName>modelo</ownerDesignName>
+<dsInitialExtent>65536</dsInitialExtent>
+<dsMaxExtents>2147483645</dsMaxExtents>
+<emUniformSize>0</emUniformSize>
+<extentManagement>LOCAL</extentManagement>
+<minExtLen>65536</minExtLen>
+<dsCompression>NOCOMPRESS</dsCompression>
+<encrypt>NO</encrypt>
+<fileType>SMALLFILE</fileType>
+<dataFiles>
+<DataFile class="oracle.dbtools.crest.model.design.storage.oracle.v10g.DataFileOraclev10g" name="cocadata01.dbf" id="A8329ACB-5EC4-9C82-CEB9-F2A712A66B3B">
+<sourceConnName>CAMARA</sourceConnName>
+<sourceObjName>/usr/datos1/oradata/cocadata01.dbf</sourceObjName>
+<createdBy>user1</createdBy>
+<createdTime>2020-10-26 17:06:16 UTC</createdTime>
+<ownerDesignName>modelo</ownerDesignName>
+<autoextend>ON</autoextend>
+<fileName>/usr/datos1/oradata/cocadata01.dbf</fileName>
+<maxSize>3</maxSize>
+<nextBlockSize>51200</nextBlockSize>
+<size>6291456</size>
+</DataFile>
+</dataFiles>
+</TableSpaceOraclev10g>

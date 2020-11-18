@@ -1,0 +1,98 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="BE55CB1B-BBBD-835E-07E2-6CEEA7DBCBED" schemaObject="F099DA1B-047F-6570-DB1B-CBD28145FF22" name="CD_MAESTRA_JSON">
+<sourceConnName>CAMARA</sourceConnName>
+<sourceObjSchema>RECA_DB</sourceObjSchema>
+<sourceObjName>BAS_MAESTRA_JSON</sourceObjName>
+<createdBy>user1</createdBy>
+<createdTime>2020-10-26 17:00:31 UTC</createdTime>
+<ownerDesignName>modelo</ownerDesignName>
+<ordsAlias>table_1</ordsAlias>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="ID" id="001C0299-9EBB-099D-88B8-CB4AA1E570C0">
+<sourceConnName>CAMARA</sourceConnName>
+<sourceObjSchema>BAS_MAESTRA_JSON</sourceObjSchema>
+<sourceObjName>ID</sourceObjName>
+<createdBy>user1</createdBy>
+<createdTime>2020-10-26 17:02:01 UTC</createdTime>
+<commentInRDBMS><![CDATA[ID PRINCIPAL TABLA]]></commentInRDBMS>
+<ownerDesignName>modelo</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>15</dataTypePrecision>
+<ownDataTypeParameters>,15,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="NOMBRE" id="7DDFA184-1842-1E14-FFF8-511B16CF226E">
+<sourceConnName>CAMARA</sourceConnName>
+<sourceObjSchema>BAS_MAESTRA_JSON</sourceObjSchema>
+<sourceObjName>NOMBRE</sourceObjName>
+<createdBy>user1</createdBy>
+<createdTime>2020-10-26 17:02:01 UTC</createdTime>
+<commentInRDBMS><![CDATA[NOMBRE DEL JSON]]></commentInRDBMS>
+<ownerDesignName>modelo</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>50</dataTypeSize>
+<ownDataTypeParameters>50,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="DESCRIPCION" id="A9D05A82-88D9-BCFD-9ADF-394BFD3D0BC0">
+<sourceConnName>CAMARA</sourceConnName>
+<sourceObjSchema>BAS_MAESTRA_JSON</sourceObjSchema>
+<sourceObjName>DESCRIPCION</sourceObjName>
+<createdBy>user1</createdBy>
+<createdTime>2020-10-26 17:02:01 UTC</createdTime>
+<commentInRDBMS><![CDATA[DESCRIPCION JSON.]]></commentInRDBMS>
+<ownerDesignName>modelo</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>3000</dataTypeSize>
+<ownDataTypeParameters>3000,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="ESTADO" id="6F6263E5-9E7C-1588-0BA4-6528D26078CF">
+<sourceConnName>CAMARA</sourceConnName>
+<sourceObjSchema>BAS_MAESTRA_JSON</sourceObjSchema>
+<sourceObjName>ESTADO</sourceObjName>
+<createdBy>user1</createdBy>
+<createdTime>2020-10-26 17:02:01 UTC</createdTime>
+<commentInRDBMS><![CDATA[ESTADO DEL JSON A- ACTIVO - I INACTIVO]]></commentInRDBMS>
+<ownerDesignName>modelo</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT025</logicalDatatype>
+<dataTypeSize>1</dataTypeSize>
+<listOfValues>
+<valueDef value="A" description="ACTIVO"/>
+<valueDef value="I" description="INACTIVO"/>
+</listOfValues>
+<ownDataTypeParameters>1,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="1FE5746F-9501-6BC4-6969-0E47580C866F" name="BAS_MAESTRAJSON_PK">
+<sourceConnName>CAMARA</sourceConnName>
+<sourceObjSchema>RECA_DB</sourceObjSchema>
+<sourceObjName>BAS_MAESTRAJSON_PK</sourceObjName>
+<createdBy>user1</createdBy>
+<createdTime>2020-10-26 17:04:03 UTC</createdTime>
+<ownerDesignName>modelo</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="001C0299-9EBB-099D-88B8-CB4AA1E570C0"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

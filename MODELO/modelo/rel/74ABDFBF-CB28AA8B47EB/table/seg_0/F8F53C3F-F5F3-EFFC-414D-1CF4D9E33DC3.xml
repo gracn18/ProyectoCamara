@@ -1,0 +1,99 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="F8F53C3F-F5F3-EFFC-414D-1CF4D9E33DC3" schemaObject="F099DA1B-047F-6570-DB1B-CBD28145FF22" name="CD_RELACION_TABLAS_JSON">
+<sourceConnName>CAMARA</sourceConnName>
+<sourceObjSchema>RECA_DB</sourceObjSchema>
+<sourceObjName>BAS_RELACION_TABLAS_JSON</sourceObjName>
+<createdBy>user1</createdBy>
+<createdTime>2020-10-26 19:59:01 UTC</createdTime>
+<ownerDesignName>modelo</ownerDesignName>
+<ordsAlias>table_8</ordsAlias>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="ID" id="510468D0-B10C-D059-5072-45EEAD560E73">
+<sourceConnName>CAMARA</sourceConnName>
+<sourceObjSchema>BAS_RELACION_TABLAS_JSON</sourceObjSchema>
+<sourceObjName>ID</sourceObjName>
+<createdBy>user1</createdBy>
+<createdTime>2020-10-26 20:00:55 UTC</createdTime>
+<ownerDesignName>modelo</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>15</dataTypePrecision>
+<ownDataTypeParameters>,15,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="ID_TABLA_ESTRUCTURA" id="5739F29E-5E58-F736-B2C8-173B7DC34E1C">
+<sourceConnName>CAMARA</sourceConnName>
+<sourceObjSchema>BAS_RELACION_TABLAS_JSON</sourceObjSchema>
+<sourceObjName>ID_TABLA_ESTRUCTURA</sourceObjName>
+<createdBy>user1</createdBy>
+<createdTime>2020-10-26 20:00:55 UTC</createdTime>
+<ownerDesignName>modelo</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>15</dataTypePrecision>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="0A083506-62AF-AA6F-1125-AC8778ABB7BA" referredColumn="1ECFBC62-E77F-D30C-0737-E6F42D7C1A2A"/>
+</associations>
+</Column>
+<Column name="ID_DETALLE_JSON_RELACION" id="DEEEBB2C-60FB-254F-00AF-14BD4AD5F737">
+<sourceConnName>CAMARA</sourceConnName>
+<sourceObjSchema>BAS_RELACION_TABLAS_JSON</sourceObjSchema>
+<sourceObjName>ID_DETALLE_JSON_RELACION</sourceObjName>
+<createdBy>user1</createdBy>
+<createdTime>2020-10-26 20:00:55 UTC</createdTime>
+<ownerDesignName>modelo</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>15</dataTypePrecision>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="AE5CAB58-C1FB-1A83-E906-A7BEDAD79D70" referredColumn="0C5D5B2C-DFEA-DC78-6C3B-201CB8A94CCA"/>
+</associations>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="CD1DA2A8-EA56-0332-F66C-15B42121E4A2" name="BAS_RELACION_TABLAS_JSON_PK">
+<sourceConnName>CAMARA</sourceConnName>
+<sourceObjSchema>RECA_DB</sourceObjSchema>
+<sourceObjName>BAS_RELACION_TABLAS_JSON_PK</sourceObjName>
+<createdBy>user1</createdBy>
+<createdTime>2020-10-26 20:01:04 UTC</createdTime>
+<ownerDesignName>modelo</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="510468D0-B10C-D059-5072-45EEAD560E73"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="B051A51B-05EE-C141-4200-76D4346F5AF1" name="CD_REL_TB_FK2">
+<createdBy>user1</createdBy>
+<createdTime>2020-10-26 20:05:16 UTC</createdTime>
+<ownerDesignName>modelo</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="5739F29E-5E58-F736-B2C8-173B7DC34E1C"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="5B33BA07-0AED-002C-C867-68FFF5638E79" name="CD_REL_TB_FK1">
+<createdBy>user1</createdBy>
+<createdTime>2020-10-26 20:06:03 UTC</createdTime>
+<ownerDesignName>modelo</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="DEEEBB2C-60FB-254F-00AF-14BD4AD5F737"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

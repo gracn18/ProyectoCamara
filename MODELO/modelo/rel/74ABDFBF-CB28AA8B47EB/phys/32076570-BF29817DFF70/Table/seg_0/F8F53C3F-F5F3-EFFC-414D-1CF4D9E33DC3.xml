@@ -1,0 +1,48 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<TableProxyOraclev11g class="oracle.dbtools.crest.model.design.storage.oracle.v11g.TableProxyOraclev11g" name="BAS_RELACION_TABLAS_JSON" directorySegmentName="seg_0" id="F8F53C3F-F5F3-EFFC-414D-1CF4D9E33DC3">
+<createdBy>user1</createdBy>
+<createdTime>2020-10-26 19:59:01 UTC</createdTime>
+<ownerDesignName>modelo</ownerDesignName>
+<logging>YES</logging>
+<partitionedRowMovement>DISABLE</partitionedRowMovement>
+<temporaryChanged>false</temporaryChanged>
+<accessDriverType>oracle_loader</accessDriverType>
+<rejectLimit></rejectLimit>
+<columnProxies itemClass="oracle.dbtools.crest.model.design.storage.oracle.v12c.ColumnProxyOraclev12c">
+<ColumnProxy name="ID" id="510468D0-B10C-D059-5072-45EEAD560E73">
+<createdBy>user1</createdBy>
+<createdTime>2020-10-26 20:00:55 UTC</createdTime>
+<ownerDesignName>modelo</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="ID_TABLA_ESTRUCTURA" id="5739F29E-5E58-F736-B2C8-173B7DC34E1C">
+<createdBy>user1</createdBy>
+<createdTime>2020-10-26 20:00:55 UTC</createdTime>
+<ownerDesignName>modelo</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="ID_DETALLE_JSON_RELACION" id="DEEEBB2C-60FB-254F-00AF-14BD4AD5F737">
+<createdBy>user1</createdBy>
+<createdTime>2020-10-26 20:00:55 UTC</createdTime>
+<ownerDesignName>modelo</ownerDesignName>
+</ColumnProxy>
+</columnProxies>
+<foreignKeys>
+<ForeignKey class="oracle.dbtools.crest.model.design.storage.oracle.v10g.FKProxyOraclev10g" name="BAS_RELACION_TABLAS_JSON_BAS_DETALLE_TABLA_JSON_FK" id="5B33BA07-0AED-002C-C867-68FFF5638E79">
+<createdBy>user1</createdBy>
+<createdTime>2020-10-26 20:06:03 UTC</createdTime>
+<ownerDesignName>modelo</ownerDesignName>
+</ForeignKey>
+<ForeignKey class="oracle.dbtools.crest.model.design.storage.oracle.v10g.FKProxyOraclev10g" name="BAS_RELACION_TABLAS_JSON_BAS_TABLAS_ESTRUCTURA_JSON_FK" id="B051A51B-05EE-C141-4200-76D4346F5AF1">
+<createdBy>user1</createdBy>
+<createdTime>2020-10-26 20:05:16 UTC</createdTime>
+<ownerDesignName>modelo</ownerDesignName>
+</ForeignKey>
+</foreignKeys>
+<primaryKeys>
+<PrimaryKey class="oracle.dbtools.crest.model.design.storage.oracle.v10g.PKProxyOraclev10g" name="BAS_RELACION_TABLAS_JSON_PK" id="CD1DA2A8-EA56-0332-F66C-15B42121E4A2">
+<createdBy>user1</createdBy>
+<createdTime>2020-10-26 20:01:04 UTC</createdTime>
+<ownerDesignName>modelo</ownerDesignName>
+<indexSort>SORTED</indexSort>
+</PrimaryKey>
+</primaryKeys>
+</TableProxyOraclev11g>

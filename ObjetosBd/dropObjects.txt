@@ -1,0 +1,5 @@
+drop table CD_RELACION_TABLAS_JSON;
+drop table CD_DETALLE_TABLA_JSON;
+drop table CD_TABLAS_ESTRUCTURA_JSON;
+drop table CD_JSON_GENERADO;
+drop table CD_MAESTRA_JSON;

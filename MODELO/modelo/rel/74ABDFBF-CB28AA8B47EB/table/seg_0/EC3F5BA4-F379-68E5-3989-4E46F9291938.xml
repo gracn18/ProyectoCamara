@@ -1,0 +1,116 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="EC3F5BA4-F379-68E5-3989-4E46F9291938" schemaObject="F099DA1B-047F-6570-DB1B-CBD28145FF22" name="CD_JSON_GENERADO">
+<sourceConnName>CAMARA</sourceConnName>
+<sourceObjSchema>RECA_DB</sourceObjSchema>
+<sourceObjName>BAS_JSON_GENERADO</sourceObjName>
+<createdBy>user1</createdBy>
+<createdTime>2020-10-26 20:19:18 UTC</createdTime>
+<ownerDesignName>modelo</ownerDesignName>
+<ordsAlias>table_9</ordsAlias>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="ID" id="7785CDF4-6B80-EDFD-11BC-0CC443DAC64F">
+<sourceConnName>CAMARA</sourceConnName>
+<sourceObjSchema>BAS_JSON_GENERADO</sourceObjSchema>
+<sourceObjName>ID</sourceObjName>
+<createdBy>user1</createdBy>
+<createdTime>2020-10-26 20:21:29 UTC</createdTime>
+<ownerDesignName>modelo</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>15</dataTypePrecision>
+<ownDataTypeParameters>,15,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="ID_MAESTRA_JSON" id="20440847-C0B3-B5AC-5864-5D7746613084">
+<sourceConnName>CAMARA</sourceConnName>
+<sourceObjSchema>BAS_JSON_GENERADO</sourceObjSchema>
+<sourceObjName>ID_MAESTRA_JSON</sourceObjName>
+<createdBy>user1</createdBy>
+<createdTime>2020-10-26 20:21:29 UTC</createdTime>
+<ownerDesignName>modelo</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>15</dataTypePrecision>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="4AE14B3A-1EF0-D090-9AB3-EBF637921FD9" referredColumn="001C0299-9EBB-099D-88B8-CB4AA1E570C0"/>
+</associations>
+</Column>
+<Column name="FECHA_GENERACION" id="120AD787-51F1-DBA3-9E04-377C2CB2EC7A">
+<sourceConnName>CAMARA</sourceConnName>
+<sourceObjSchema>BAS_JSON_GENERADO</sourceObjSchema>
+<sourceObjName>FECHA_GENERACION</sourceObjName>
+<createdBy>user1</createdBy>
+<createdTime>2020-10-26 20:21:29 UTC</createdTime>
+<ownerDesignName>modelo</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT007</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="JSON_GENERADO" id="2E02E66D-B2FB-162D-CAEE-21739D0EFD87">
+<sourceConnName>CAMARA</sourceConnName>
+<sourceObjSchema>BAS_JSON_GENERADO</sourceObjSchema>
+<sourceObjName>JSON_GENERADO</sourceObjName>
+<createdBy>user1</createdBy>
+<createdTime>2020-10-26 20:21:50 UTC</createdTime>
+<ownerDesignName>modelo</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT028</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="LOG" id="892244D8-9A5D-18D3-0EA1-D3BFC8767B50">
+<sourceConnName>CAMARA</sourceConnName>
+<sourceObjSchema>BAS_JSON_GENERADO</sourceObjSchema>
+<sourceObjName>LOG</sourceObjName>
+<createdBy>user1</createdBy>
+<createdTime>2020-10-26 20:28:54 UTC</createdTime>
+<commentInRDBMS><![CDATA[Log proceso.]]></commentInRDBMS>
+<ownerDesignName>modelo</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>3000</dataTypeSize>
+<ownDataTypeParameters>3000,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="C65DA292-C67E-5D5E-0E62-FE50166A3349" name="BAS_JSON_GENERADO_PK">
+<sourceConnName>CAMARA</sourceConnName>
+<sourceObjSchema>RECA_DB</sourceObjSchema>
+<sourceObjName>BAS_JSON_GENERADO_PK</sourceObjName>
+<createdBy>user1</createdBy>
+<createdTime>2020-10-26 20:22:01 UTC</createdTime>
+<ownerDesignName>modelo</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="7785CDF4-6B80-EDFD-11BC-0CC443DAC64F"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="C670FD82-896D-51EE-5023-5580CC93E3F5" name="CD_JS_GEN_MAESJSON_FK1">
+<createdBy>user1</createdBy>
+<createdTime>2020-10-26 20:29:17 UTC</createdTime>
+<ownerDesignName>modelo</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="20440847-C0B3-B5AC-5864-5D7746613084"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

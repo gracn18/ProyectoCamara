@@ -1,0 +1,58 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<TableProxyOraclev11g class="oracle.dbtools.crest.model.design.storage.oracle.v11g.TableProxyOraclev11g" name="BAS_TABLAS_ESTRUCTURA" directorySegmentName="seg_0" id="6B7FAF2E-D000-5CD5-EB85-216097F88F3D">
+<createdBy>user1</createdBy>
+<createdTime>2020-10-26 18:57:08 UTC</createdTime>
+<ownerDesignName>modelo</ownerDesignName>
+<logging>YES</logging>
+<partitionedRowMovement>DISABLE</partitionedRowMovement>
+<temporaryChanged>false</temporaryChanged>
+<accessDriverType>oracle_loader</accessDriverType>
+<rejectLimit></rejectLimit>
+<columnProxies itemClass="oracle.dbtools.crest.model.design.storage.oracle.v12c.ColumnProxyOraclev12c">
+<ColumnProxy name="ID_MAESTROJSON" id="04A12FB0-1779-D7D8-A230-D5E407D4CA51">
+<createdBy>user1</createdBy>
+<createdTime>2020-10-26 18:58:58 UTC</createdTime>
+<ownerDesignName>modelo</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="TABLA_PADRE" id="0918B78A-B730-8949-9631-8D6BA5F309F4">
+<createdBy>user1</createdBy>
+<createdTime>2020-10-26 19:05:07 UTC</createdTime>
+<ownerDesignName>modelo</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="ID" id="1ECFBC62-E77F-D30C-0737-E6F42D7C1A2A">
+<createdBy>user1</createdBy>
+<createdTime>2020-10-26 18:57:31 UTC</createdTime>
+<ownerDesignName>modelo</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="TABLA_ORIGEN" id="29767634-A8F5-CEED-D9E5-F7768061D5FF">
+<createdBy>user1</createdBy>
+<createdTime>2020-10-26 18:58:58 UTC</createdTime>
+<ownerDesignName>modelo</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="WHERE_DINAMICO" id="4327314D-18ED-2515-765C-5D2388E04EBC">
+<createdBy>user1</createdBy>
+<createdTime>2020-10-26 18:58:58 UTC</createdTime>
+<ownerDesignName>modelo</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="TIPO_TABLA" id="D6795330-B26B-EEEE-A4D0-602E3EC3A02C">
+<createdBy>user1</createdBy>
+<createdTime>2020-10-26 19:05:07 UTC</createdTime>
+<ownerDesignName>modelo</ownerDesignName>
+</ColumnProxy>
+</columnProxies>
+<foreignKeys>
+<ForeignKey class="oracle.dbtools.crest.model.design.storage.oracle.v10g.FKProxyOraclev10g" name="BAS_JSONM_TABLAS_FK1" id="B1EEAAE1-FE4A-3B8E-5E89-CD5DD1CE72BC">
+<createdBy>user1</createdBy>
+<createdTime>2020-10-26 19:35:41 UTC</createdTime>
+<ownerDesignName>modelo</ownerDesignName>
+</ForeignKey>
+</foreignKeys>
+<primaryKeys>
+<PrimaryKey class="oracle.dbtools.crest.model.design.storage.oracle.v10g.PKProxyOraclev10g" name="BAS_TABLAS_ESTRUCTURA_PK" id="6144096B-491F-ABD4-EF65-894084690A7A">
+<createdBy>user1</createdBy>
+<createdTime>2020-10-26 19:05:07 UTC</createdTime>
+<ownerDesignName>modelo</ownerDesignName>
+<indexSort>SORTED</indexSort>
+</PrimaryKey>
+</primaryKeys>
+</TableProxyOraclev11g>
