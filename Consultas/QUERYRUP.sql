@@ -49,14 +49,17 @@ SELECT
 
 FROM
     rp_proponente A ,  RP_NOMBRE_SM b, nombres_inscritos c , inscritos d, rp_proponente_pj e
-    --, rp_direccion f
+
     WHERE 
       a.registro = b.registro(+)
       and a.estado = 0 -- condicion 1
-      and a.matricula is not null --condicion 2
       and c.camara = a.camara
       and c.matricula = a.matricula
       and d.camara = a.camara (+)
       and d.matricula = a.matricula(+)
       and a.registro  = e.registro(+) ;
+	  
+	  
+	  /*representacion legal*/
+	  
      

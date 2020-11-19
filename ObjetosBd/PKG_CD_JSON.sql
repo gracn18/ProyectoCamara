@@ -49,7 +49,7 @@ CREATE OR REPLACE PACKAGE BODY PKG_CD_JSON AS
  end guardaProceso;
 
 
-  function generaSqlTablaPrincipal(vid number ,datoswhere varchar2) return varchar2 AS 
+  function generaSqlTablaPrincipal(vid number ,datoswhere varchar2,vtipo varchar2) return varchar2 AS 
   cursor cuDatosTabla is 
   select * from  CD_TABLAS_ESTRUCTURA_JSON  where id = vid;
   
@@ -77,13 +77,21 @@ CREATE OR REPLACE PACKAGE BODY PKG_CD_JSON AS
   nuEstructura number := null;
   sbsqlTabla2 varchar2(32000) :='';
   
+  sbArregloini varchar2(20) := '';
+  sbArreglofin varchar2(20) := '';
   
   BEGIN
 	OPEN cuDatosTabla;
 	FETCH cuDatosTabla INTO rgDatosTabla;
 	CLOSE cuDatosTabla;
 	
-	sbRestsql :='SELECT XMLELEMENT("'||rgDatosTabla.tag_tabla_plural||'",
+	if(vtipo ='S') THEN
+		sbArregloini := 'XMLAGG(';
+		sbArreglofin := ')';
+		
+	end if;
+	 
+	sbRestsql :='SELECT '||sbArregloini||' XMLELEMENT("'||rgDatosTabla.tag_tabla_plural||'",
 						 
 								XMLELEMENT ("'||rgDatosTabla.tag_tabla_singular||'", 
 									XMLFOREST (';
@@ -107,7 +115,7 @@ CREATE OR REPLACE PACKAGE BODY PKG_CD_JSON AS
 			close cuTablaAnidada;
 			
 			if(nuEstructura is null ) then
-				guardaProceso(vid,NULL,'JSON ERR : NO EXISTE CONFIGURACION DE TABLA PARA LA  LISTA  ID : .'||rgCampos.id );
+				guardaProceso(rgDatosTabla.ID_MAESTROJSON,NULL,'JSON ERR : NO EXISTE CONFIGURACION DE TABLA PARA LA  LISTA  ID : .'||rgCampos.id );
 				RAISE_APPLICATION_ERROR(-20000, 'JSON ERR : NO EXISTE CONFIGURACION DE TABLA PARA LA LISTA  ID : .'||rgCampos.id);
 			end if;
 
@@ -115,7 +123,7 @@ CREATE OR REPLACE PACKAGE BODY PKG_CD_JSON AS
 			fetch cuDatosTabla2 into rgDatosTabla2;
 			close cuDatosTabla2; 
 			--se crea xml de la estructura anidada.
-			sbsqlTabla2 := generaSqlTablaPrincipal(nuEstructura,null);
+			sbsqlTabla2 := generaSqlTablaPrincipal(nuEstructura,null,'S');
 			sbCampos := sbCampos ||'	( 
 										'|| sbsqlTabla2 ||'
 										
@@ -140,7 +148,7 @@ CREATE OR REPLACE PACKAGE BODY PKG_CD_JSON AS
 				)
 			
 		)
-	) xmldata';
+	) '||sbArreglofin||' xmldata';
 	
 	
 	-- se concatena el from de la tabla
@@ -155,13 +163,13 @@ CREATE OR REPLACE PACKAGE BODY PKG_CD_JSON AS
 	
 	sbRestsql := sbRestsql || datoswhere ;
 	
-	dbms_output.put_line('sql '||sbRestsql);
+	--dbms_output.put_line('sql '||sbRestsql);
 	
 	
 	
 	
 	if(nuCampos = 0) then
-		guardaProceso(vid,NULL,'JSON ERR : LA TABLA ID : '||vid||'  NO TIENE CONFIGURADO DETALLE DE LA ESTRUCTURA.');
+		guardaProceso(rgDatosTabla.ID_MAESTROJSON,NULL,'JSON ERR : LA TABLA ID : '||vid||'  NO TIENE CONFIGURADO DETALLE DE LA ESTRUCTURA.');
 		RAISE_APPLICATION_ERROR(-20000, 'JSON ERR : LA TABLA ID : '||vid||' NO TIENE CONFIGURADO DETALLE DE LA ESTRUCTURA.');
 		
 	end if;
@@ -217,7 +225,7 @@ CREATE OR REPLACE PACKAGE BODY PKG_CD_JSON AS
 			RAISE_APPLICATION_ERROR(-20000, 'JSON ERR : NO SE ENCONTRO CONFIGURACION DE TABLA PRINCIPAL '||rgtablaPrincipal.id);
 	end if;
 	
-    vsqlxml :=generaSqlTablaPrincipal(rgtablaPrincipal.id,datos);
+    vsqlxml :=generaSqlTablaPrincipal(rgtablaPrincipal.id,datos,'N');
 	
 	
 	
@@ -226,6 +234,9 @@ CREATE OR REPLACE PACKAGE BODY PKG_CD_JSON AS
 		EXECUTE IMMEDIATE vsqlxml into v_row;
 		
 		exception 
+		when no_data_found then
+			guardaProceso(jsonid,NULL,'JSON ERR : NO SE ENCONTRARON REGISTORS ');
+			RAISE_APPLICATION_ERROR(-20000, 'JSON ERR : NO SE ENCONTRARON REGISTROS '||vsqlxml);
 		when others then
 			guardaProceso(jsonid,NULL,'JSON ERR : ERROR EJECUTANDO QUERY XML '||vsqlxml);
 
