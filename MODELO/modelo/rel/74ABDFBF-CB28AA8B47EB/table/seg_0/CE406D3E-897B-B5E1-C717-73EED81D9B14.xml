@@ -1,0 +1,139 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="CE406D3E-897B-B5E1-C717-73EED81D9B14" schemaObject="F099DA1B-047F-6570-DB1B-CBD28145FF22" name="CD_TABLA_DATOS_JSON">
+<createdBy>user1</createdBy>
+<createdTime>2020-11-20 20:54:06 UTC</createdTime>
+<ownerDesignName>modelo</ownerDesignName>
+<ordsAlias>table_7</ordsAlias>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="ID" id="E76651AB-7DB9-5BDC-8069-669CBE092D90">
+<createdBy>user1</createdBy>
+<createdTime>2020-11-20 20:58:28 UTC</createdTime>
+<commentInRDBMS><![CDATA[id principal de la tabla]]></commentInRDBMS>
+<ownerDesignName>modelo</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>15</dataTypePrecision>
+<ownDataTypeParameters>,15,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="ID_CD_MAESTRA_JSON" id="929100F4-CB1B-BD0F-D6F7-0F43E2416697">
+<createdBy>user1</createdBy>
+<createdTime>2020-11-20 20:58:28 UTC</createdTime>
+<commentInRDBMS><![CDATA[id relacion de los maestra json.]]></commentInRDBMS>
+<ownerDesignName>modelo</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>15</dataTypePrecision>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="B0EA9BD5-2C25-5A38-A5DA-61AFE3477E67" referredColumn="001C0299-9EBB-099D-88B8-CB4AA1E570C0"/>
+</associations>
+</Column>
+<Column name="ID_DETALLE_JSON" id="12584577-4852-D53C-AD9E-C433C51F69F6">
+<createdBy>user1</createdBy>
+<createdTime>2020-11-20 20:58:28 UTC</createdTime>
+<commentInRDBMS><![CDATA[id detalle json que define que campo se guardo de la lectua del json.
+]]></commentInRDBMS>
+<ownerDesignName>modelo</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>15</dataTypePrecision>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="F9DFDEB6-E093-95A9-548F-B382D4482D7A" referredColumn="0C5D5B2C-DFEA-DC78-6C3B-201CB8A94CCA"/>
+</associations>
+</Column>
+<Column name="VALOR" id="ED509425-44FD-B374-1D59-CCED1D53125F">
+<createdBy>user1</createdBy>
+<createdTime>2020-11-20 20:58:28 UTC</createdTime>
+<commentInRDBMS><![CDATA[valor del json.]]></commentInRDBMS>
+<ownerDesignName>modelo</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>4000</dataTypeSize>
+<ownDataTypeParameters>4000,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="VALORCLOB" id="E9CBCBCB-4D1B-4C86-8775-B52CA7A4D763">
+<createdBy>user1</createdBy>
+<createdTime>2020-11-20 21:04:07 UTC</createdTime>
+<commentInRDBMS><![CDATA[valor textos largos del json.
+]]></commentInRDBMS>
+<ownerDesignName>modelo</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT028</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="CD_JSON_CARGUE_ID" id="E02704EE-770C-4144-47F4-91F6B5E71C32">
+<createdBy>user1</createdBy>
+<createdTime>2020-11-20 21:21:55 UTC</createdTime>
+<ownerDesignName>modelo</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>15</dataTypePrecision>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<previousColumn>false</previousColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="9A4DC89A-56EA-20C8-6E7E-2F1C2A494F59" referredColumn="95C37F52-A3C7-DD0D-3BC3-E3F1C9418226"/>
+</associations>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="CBD82932-837F-2146-4EDB-B8CE7DD526B4" name="CD_TABLA_DATOS_JSON_PK">
+<createdBy>user1</createdBy>
+<createdTime>2020-11-20 21:04:07 UTC</createdTime>
+<ownerDesignName>modelo</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="E76651AB-7DB9-5BDC-8069-669CBE092D90"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="D9EAE469-07D7-E891-BD11-7C4FFE26FE99" name="CD_TABLA_DATOS_FK1">
+<createdBy>user1</createdBy>
+<createdTime>2020-11-20 21:11:00 UTC</createdTime>
+<ownerDesignName>modelo</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="929100F4-CB1B-BD0F-D6F7-0F43E2416697"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="C181394F-076B-9EE1-53B9-6BBE4D4CA215" name="CD_TABLA_DATOS_JSON_FK2">
+<createdBy>user1</createdBy>
+<createdTime>2020-11-20 21:11:59 UTC</createdTime>
+<ownerDesignName>modelo</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="12584577-4852-D53C-AD9E-C433C51F69F6"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="56DB8203-6EC7-30BB-EE23-36CE39862592" name="CD_TABLA_DATOS_JSON_FK3">
+<createdBy>user1</createdBy>
+<createdTime>2020-11-20 21:21:55 UTC</createdTime>
+<ownerDesignName>modelo</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="E02704EE-770C-4144-47F4-91F6B5E71C32"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

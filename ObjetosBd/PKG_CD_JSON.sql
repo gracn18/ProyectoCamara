@@ -79,6 +79,10 @@ CREATE OR REPLACE PACKAGE BODY PKG_CD_JSON AS
   
   sbArregloini varchar2(20) := '';
   sbArreglofin varchar2(20) := '';
+  sbSubTagini  varchar2(500) := '';
+  sbSubTagfin  varchar2(500) := '';
+  sbElementprincipalini varchar2(1000) := '';
+  sbElementprincipalfin varchar2(1000) := '';
   
   BEGIN
 	OPEN cuDatosTabla;
@@ -91,9 +95,22 @@ CREATE OR REPLACE PACKAGE BODY PKG_CD_JSON AS
 		
 	end if;
 	 
-	sbRestsql :='SELECT '||sbArregloini||' XMLELEMENT("'||rgDatosTabla.tag_tabla_plural||'",
+	 if(vtipo = 'S') then
+		sbSubTagini := '	XMLELEMENT ("'||rgDatosTabla.tag_tabla_singular||'", ';
+		
+		sbSubTagfin := ')';
+		
+	 end if;
+	 
+	 if(vtipo= 'P' OR vtipo= 'U') then
+		sbElementprincipalini :=' XMLELEMENT("'||rgDatosTabla.tag_tabla_plural||'",
 						 
-								XMLELEMENT ("'||rgDatosTabla.tag_tabla_singular||'", 
+									';
+		sbElementprincipalfin := ')';							
+	 end if;
+	sbRestsql :='SELECT '||sbArregloini
+	
+					||sbElementprincipalini||sbSubTagini||' 
 									XMLFOREST (';
 	
 	
@@ -105,7 +122,7 @@ CREATE OR REPLACE PACKAGE BODY PKG_CD_JSON AS
 		-- SE GENERA EL CAMPO NORMAL.
 		IF (rgCampos.TIPO_CAMPO = 'N') THEN
 			sbCampos := sbCampos  || '
-													'||rgCampos.NOMBRE_CAMPO_ORACLE || ' AS "'|| rgCampos.NOMBRE_CAMPO_JSON||'",';
+													NVL('||rgCampos.NOMBRE_CAMPO_ORACLE || ','''') AS "'|| rgCampos.NOMBRE_CAMPO_JSON||'",';
 		END IF;
 		
 		if(rgCampos.TIPO_CAMPO = 'S') then
@@ -123,11 +140,11 @@ CREATE OR REPLACE PACKAGE BODY PKG_CD_JSON AS
 			fetch cuDatosTabla2 into rgDatosTabla2;
 			close cuDatosTabla2; 
 			--se crea xml de la estructura anidada.
-			sbsqlTabla2 := generaSqlTablaPrincipal(nuEstructura,null,'S');
+			sbsqlTabla2 := generaSqlTablaPrincipal(nuEstructura,null,rgDatosTabla2.tipo_tabla);
 			sbCampos := sbCampos ||'	( 
 										'|| sbsqlTabla2 ||'
 										
-									)' || rgDatosTabla2.tag_tabla_plural||',';
+									) '|| rgDatosTabla2.tag_tabla_plural||',';
 			
 			--limpiar cadenas
 			rgDatosTabla2 := null;
@@ -145,9 +162,9 @@ CREATE OR REPLACE PACKAGE BODY PKG_CD_JSON AS
 	
 	
 	sbRestsql :=sbRestsql||sbCampos||'
-				)
+				'||sbElementprincipalfin||'
 			
-		)
+		'||sbSubTagfin||'
 	) '||sbArreglofin||' xmldata';
 	
 	
@@ -225,7 +242,7 @@ CREATE OR REPLACE PACKAGE BODY PKG_CD_JSON AS
 			RAISE_APPLICATION_ERROR(-20000, 'JSON ERR : NO SE ENCONTRO CONFIGURACION DE TABLA PRINCIPAL '||rgtablaPrincipal.id);
 	end if;
 	
-    vsqlxml :=generaSqlTablaPrincipal(rgtablaPrincipal.id,datos,'N');
+    vsqlxml :=generaSqlTablaPrincipal(rgtablaPrincipal.id,datos,'P');
 	
 	
 	
@@ -238,7 +255,7 @@ CREATE OR REPLACE PACKAGE BODY PKG_CD_JSON AS
 			guardaProceso(jsonid,NULL,'JSON ERR : NO SE ENCONTRARON REGISTORS ');
 			RAISE_APPLICATION_ERROR(-20000, 'JSON ERR : NO SE ENCONTRARON REGISTROS '||vsqlxml);
 		when others then
-			guardaProceso(jsonid,NULL,'JSON ERR : ERROR EJECUTANDO QUERY XML '||vsqlxml);
+			guardaProceso(jsonid,NULL,'JSON ERR : ERROR EJECUTANDO QUERY XML ');
 
 			RAISE_APPLICATION_ERROR(-20000, 'JSON ERR : ERROR EJECUTANDO QUERY XML '||vsqlxml);
 	end;

@@ -14,7 +14,10 @@ cursor cuDatos is select texto from Textos_Para_Certificar where matricula = vma
 BEGIN
 	DBMS_LOB.CREATETEMPORARY(resTexto,true);
   for rgDatos in cuDatos loop
-        dbms_lob.append(resTexto, rgDatos.texto);
+  
+        
+        dbms_lob.append(resTexto, regexp_replace(rgDatos.texto,'[[:space:]]',' '));
+        --dbms_lob.append(resTexto, replace(replace(REPLACE(rgDatos.texto,'/n','**'),chr(32),''),''||chr(10),'') );
   end loop;
     
   RETURN resTexto;
