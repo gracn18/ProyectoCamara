@@ -92,6 +92,19 @@
 <colAssociation fkAssociation="9A4DC89A-56EA-20C8-6E7E-2F1C2A494F59" referredColumn="95C37F52-A3C7-DD0D-3BC3-E3F1C9418226"/>
 </associations>
 </Column>
+<Column name="NRO_REGISTRO" id="7EF61798-D9AC-C5A0-878F-ABF7F9DD0FA9">
+<createdBy>user1</createdBy>
+<createdTime>2020-11-23 21:48:16 UTC</createdTime>
+<commentInRDBMS><![CDATA[el numero de registro de los datos a guardar.]]></commentInRDBMS>
+<ownerDesignName>modelo</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>15</dataTypePrecision>
+<ownDataTypeParameters>,15,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
 </columns>
 <indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
 <ind_PK_UK id="CBD82932-837F-2146-4EDB-B8CE7DD526B4" name="CD_TABLA_DATOS_JSON_PK">
