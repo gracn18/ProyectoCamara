@@ -107,6 +107,57 @@
 <ownDataTypeParameters>50,,</ownDataTypeParameters>
 <autoIncrementCycle>false</autoIncrementCycle>
 </Column>
+<Column name="ORDEN" id="F92BE024-E4B2-A056-B73A-8758E162B5D6">
+<createdBy>user1</createdBy>
+<createdTime>2020-11-23 15:17:39 UTC</createdTime>
+<ownerDesignName>modelo</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="OBLIGATORIO" id="B92A8408-BD4D-123A-4513-02EB15ABD116">
+<createdBy>user1</createdBy>
+<createdTime>2020-11-23 15:00:14 UTC</createdTime>
+<commentInRDBMS><![CDATA[Si el campo es obligatorio para cargue]]></commentInRDBMS>
+<ownerDesignName>modelo</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>1</dataTypeSize>
+<ownDataTypeParameters>1,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="NOMBRECAMPODESINO" id="194A59D5-2211-C277-C724-0E1356D5E6FD">
+<createdBy>user1</createdBy>
+<createdTime>2020-11-23 15:00:39 UTC</createdTime>
+<commentInRDBMS><![CDATA[Define en que campo de oracle destino
+]]></commentInRDBMS>
+<ownerDesignName>modelo</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>100</dataTypeSize>
+<ownDataTypeParameters>100,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="NOMBRETABLADESTINO" id="E5BED50A-A2AD-B7CE-D661-72E3AA95F592">
+<createdBy>user1</createdBy>
+<createdTime>2020-11-23 15:01:21 UTC</createdTime>
+<commentInRDBMS><![CDATA[Define nombre tabla destino]]></commentInRDBMS>
+<ownerDesignName>modelo</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>100</dataTypeSize>
+<ownDataTypeParameters>100,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
 </columns>
 <indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
 <ind_PK_UK id="F81AF24E-8A2D-CC36-B71F-7F52A719E346" name="BAS_DETALLETABLAJSON_PK">
