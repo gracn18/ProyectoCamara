@@ -1,0 +1,60 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="E55617FC-67C5-2D05-CF64-A0173F367A12" schemaObject="F099DA1B-047F-6570-DB1B-CBD28145FF22" name="CD_JSON_LOG_ERRORES_CARGUE">
+<createdBy>user1</createdBy>
+<createdTime>2020-11-27 16:31:12 UTC</createdTime>
+<ownerDesignName>modelo</ownerDesignName>
+<ordsAlias>table_9</ordsAlias>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="ID" id="5ED73419-92E7-1CF3-ED2D-D3437C34FB77">
+<createdBy>user1</createdBy>
+<createdTime>2020-11-27 16:35:29 UTC</createdTime>
+<ownerDesignName>modelo</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>15</dataTypePrecision>
+<ownDataTypeParameters>,15,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="ERROR" id="3B107C04-5A30-4245-DFCC-63D15520E842">
+<createdBy>user1</createdBy>
+<createdTime>2020-11-27 16:35:29 UTC</createdTime>
+<ownerDesignName>modelo</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>4000</dataTypeSize>
+<ownDataTypeParameters>4000,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="CD_JSON_CARGUE_ID" id="9FE5352E-E344-6252-BAD7-0F0764501151">
+<createdBy>user1</createdBy>
+<createdTime>2020-11-27 16:35:29 UTC</createdTime>
+<ownerDesignName>modelo</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>15</dataTypePrecision>
+<ownDataTypeParameters>,15,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="FD3508F8-9A41-6EF0-8ED2-AD1ED25AF547" name="CD_JSON_LOG_ERRORES_CARGUE_PK">
+<createdBy>user1</createdBy>
+<createdTime>2020-11-27 16:35:29 UTC</createdTime>
+<ownerDesignName>modelo</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="5ED73419-92E7-1CF3-ED2D-D3437C34FB77"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

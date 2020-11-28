@@ -17,7 +17,7 @@ CREATE OR REPLACE PACKAGE PKG_CD_JSON AS
  
  function generarJsonxmlclob(xml clob,json clob)return clob;
 
- function cargarJson(idProceso varchar2)return varchar2;
+ function cargarJson(idProceso varchar2,cadena varchar2,usuario varchar2,clave varchar2)return varchar2;
  
  
 END PKG_CD_JSON;
@@ -298,9 +298,9 @@ LANGUAGE JAVA
 NAME 'utils.json.JsonplUtil.generarJsonxmlclob(java.sql.Clob,java.sql.Clob) return java.sql.Clob ';
 
 
-function         cargarJson(idProceso varchar2)return varchar2 as
+function         cargarJson(idProceso varchar2,cadena varchar2,usuario varchar2,clave varchar2)return varchar2 as
 LANGUAGE JAVA
-NAME 'utils.json.JsonplUtil.jsontodataoracle(java.lang.String) return java.lang.String';
+NAME 'utils.json.JsonplUtil.jsontodataoracle(java.lang.String,java.lang.String,java.lang.String,java.lang.String) return java.lang.String';
   
 
 END PKG_CD_JSON;

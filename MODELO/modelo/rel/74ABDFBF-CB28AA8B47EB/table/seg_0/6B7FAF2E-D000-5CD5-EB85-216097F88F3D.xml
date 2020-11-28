@@ -135,6 +135,19 @@
 <ownDataTypeParameters>100,,</ownDataTypeParameters>
 <autoIncrementCycle>false</autoIncrementCycle>
 </Column>
+<Column name="NOMBRE_PROCESO" id="F0E3FB14-6CC3-F08D-4449-524154E918FC">
+<createdBy>user1</createdBy>
+<createdTime>2020-11-28 15:57:31 UTC</createdTime>
+<commentInRDBMS><![CDATA[Nombre procedimiento]]></commentInRDBMS>
+<ownerDesignName>modelo</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>500</dataTypeSize>
+<ownDataTypeParameters>500,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
 </columns>
 <indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
 <ind_PK_UK id="6144096B-491F-ABD4-EF65-894084690A7A" name="BAS_TABLAS_ESTRUCTURA_PK">

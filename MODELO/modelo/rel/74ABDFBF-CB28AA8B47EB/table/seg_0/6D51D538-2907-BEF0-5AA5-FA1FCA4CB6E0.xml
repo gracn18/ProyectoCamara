@@ -29,7 +29,7 @@
 <use>1</use>
 <logicalDatatype>LOGDT019</logicalDatatype>
 <dataTypePrecision>15</dataTypePrecision>
-<ownDataTypeParameters>,15,</ownDataTypeParameters>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
 <autoIncrementCycle>false</autoIncrementCycle>
 <associations>
 <colAssociation fkAssociation="716195E6-D79D-3FDB-8B52-ECE8E30A3D2B" referredColumn="001C0299-9EBB-099D-88B8-CB4AA1E570C0"/>
@@ -83,6 +83,19 @@
 <use>1</use>
 <logicalDatatype>LOGDT028</logicalDatatype>
 <ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="NRO_PROPONENTE" id="E64FA4AF-F4E8-4884-E849-3507DCD98103">
+<createdBy>user1</createdBy>
+<createdTime>2020-11-28 17:05:37 UTC</createdTime>
+<commentInRDBMS><![CDATA[Numero proponente para proceso ]]></commentInRDBMS>
+<ownerDesignName>modelo</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>15</dataTypePrecision>
+<ownDataTypeParameters>,15,</ownDataTypeParameters>
 <autoIncrementCycle>false</autoIncrementCycle>
 </Column>
 </columns>
