@@ -32,7 +32,31 @@ CREATE OR REPLACE PACKAGE BODY PKG_CD_JSON AS
  sbres varchar2(1000) :='';
  
  begin
-	select VALOR_HOMOLOGADO into sbres FROM  RECA_DB.CD_HOMOLOGACION_JSON WHERE TABLA = vtabla and VALOR_LOCAL = datolocal; 
+	/*select VALOR_HOMOLOGADO into sbres FROM  RECA_DB.CD_HOMOLOGACION_JSON WHERE TABLA = vtabla and VALOR_LOCAL = datolocal; */
+	
+	if(vtabla = 'TIPO_IDENTIFICACION') then
+		begin
+			SELECT ti.CODIGO_RUE into  sbres FROM BAS_CLASES_IDENTIFICACION ti WHERE ti.CODIGO_LOCAL=datolocal AND ROWNUM=1;
+		exception 
+		when others then
+			sbres := '';
+
+		end;
+	end if;
+	
+	
+	if(vtabla = 'ORGANIZACION_JURIDICA') then
+	
+		begin
+			SELECT ti.CODIGO_RUE  into  sbres FROM BAS_ORGANIZACIONES_JURIDICAS ti WHERE ti.CODIGO_LOCAL=datolocal AND ROWNUM=1;
+		exception 
+		when others then
+			sbres := '';
+		end;
+		
+	end if;
+
+
 	return sbres;
 	
 	exception 
