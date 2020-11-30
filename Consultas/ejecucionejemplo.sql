@@ -5,7 +5,7 @@ DECLARE
   CLOBJSONGEN CLOB;
 BEGIN
   JSONID := 2;
-  DATOS := ' and a.registro = 7374 and rownum = 1 ';
+  DATOS := ' and a.registro = 15302 and rownum = 1 ';
 
   PKG_CD_JSON.GENERARJSON(
     JSONID => JSONID,
@@ -24,7 +24,7 @@ END;
 DECLARE
   VPROCESO NUMBER;
 BEGIN
-  VPROCESO := 84;
+  VPROCESO := 121;
 
   PKG_CD_CAMBIO_DOM.CARGATABLA(
     VPROCESO => VPROCESO
@@ -39,7 +39,7 @@ END;
 
 PKG_CD_CAMBIO_DOM;
 
-
+truncate table cd_tabla_datos_json
 select to_number('376,6', '9999999999D9999', 'NLS_NUMERIC_CHARACTERS='',.''') from dual
 
 select to_number('376,6','9999,0','NLS_NUMERIC_CHARACTERS = '',.''') from dual
