@@ -128,12 +128,21 @@ CREATE OR REPLACE PACKAGE BODY PKG_CD_JSON AS
 		
 	 end if;
 	 
-	 if(vtipo= 'P' OR vtipo= 'U') then
+	 if(vtipo= 'P') then
 		sbElementprincipalini :=' XMLELEMENT("'||rgDatosTabla.tag_tabla_plural||'",
 						 
 									';
 		sbElementprincipalfin := ')';							
 	 end if;
+	 
+	 
+	 if(vtipo= 'U') then
+		sbElementprincipalini :=' XMLAGG (
+		
+									';
+		sbElementprincipalfin := ')';							
+	 end if;
+	 
 	sbRestsql :='SELECT '||sbArregloini
 	
 					||sbElementprincipalini||sbSubTagini||' 
@@ -278,10 +287,11 @@ CREATE OR REPLACE PACKAGE BODY PKG_CD_JSON AS
 		
 		exception 
 		when no_data_found then
+			dbms_output.put_line(vsqlxml);-- TODO INSERTAR EN UN CLOB EL SQL.
 			guardaProceso(jsonid,NULL,'JSON ERR : NO SE ENCONTRARON REGISTROS ');
 			RAISE_APPLICATION_ERROR(-20000, 'JSON ERR : NO SE ENCONTRARON REGISTROS '||vsqlxml);
 		when others then
-			--dbms_output.put_line(vsqlxml); TODO INSERTAR EN UN CLOB EL SQL.
+			dbms_output.put_line(vsqlxml);-- TODO INSERTAR EN UN CLOB EL SQL.
 			guardaProceso(jsonid,NULL,'JSON ERR : ERROR EJECUTANDO QUERY XML ');
 
 			RAISE_APPLICATION_ERROR(-20000, 'JSON ERR : ERROR EJECUTANDO QUERY XML '||vsqlxml);
