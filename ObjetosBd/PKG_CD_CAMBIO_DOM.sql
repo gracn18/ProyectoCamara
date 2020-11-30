@@ -1,14 +1,14 @@
 CREATE OR REPLACE PACKAGE PKG_CD_CAMBIO_DOM AS 
-/*
-    Definicion : paquete logida de cambio de domicilio a partir de datos cargados en la tabla cd_tabla_datos_json
-    Parametros : 
-*/
+/* ******************************************************************************************************************
+    Definicion : paquete logica de cambio de domicilio a partir de datos cargados en la tabla cd_tabla_datos_json
+    Autor : Manuel Palomares Vision Ingenieria
+	Fecha : 15/11/2020
+*********************************************************************************************************************/
 
 	
  procedure cargaTabla(vproceso number);
- function fnGetValorCampoTabla(proceso number,idTabla number,campoTabla varchar2,numReg number) return varchar2;
-
- --function fnGetValorCampoTablaClob(proceso number,idTabla number,campoTabla varchar2,numReg number) return varchar2;
+ function  fnGetValorCampoTabla(proceso number,idTabla number,campoTabla varchar2,numReg number) return varchar2;
+ function  fnGetValorCampoTablaClob(proceso number,idTabla number,campoTabla varchar2,numReg number) return clob;
  procedure llenarDatosProcedimiento(vproceso number,vnombreproceso varchar2,idtabla number,registrostabla number); 
  
  
@@ -17,6 +17,10 @@ CREATE OR REPLACE PACKAGE PKG_CD_CAMBIO_DOM AS
  procedure crearNombreProponente(vproceso number, P_NOMBRE varchar2,P_SEGUNDO_NOMBE varchar2,P_PRIMER_NOMBRE varchar2,P_SEGUNDO_APELLIDO varchar2, P_PRIMER_APELLIDO varchar2);
  procedure crearRptProponentePn(vproceso number,P_NRO_IDENTIFICACION varchar2,P_TIPO_IDENTIFICACION varchar2,P_PAIS varchar2);
  procedure crearRptProponentePj(vproceso number,P_FECHA_VENCIMIENTO varchar2,P_FECHA_DOCUMENTO varchar2,P_TIPO_DOCUMENTO varchar2,P_NRO_DOCUMENTO varchar2);
+ procedure guardarFacultades(vproceso number,textoClob clob);
+ procedure guardarRptExperiencia(vproceso number,P_NRO_CONTRATO varchar2,P_NOMBRE_CONTRATANTE varchar2, P_VALOR_CONTRATO varchar2,P_PORCENTAJE varchar2,P_ID_TIPO_ENTIDAD varchar2,P_NOMBRE_CONTRATISTA varchar2);
+ 
+ 
 
 END PKG_CD_CAMBIO_DOM;
 /
@@ -50,7 +54,36 @@ function fnGetValorCampoTabla(proceso number,idTabla number,campoTabla varchar2,
 	when others then 
 		return '';
 		
- end fnGetValorCampoTabla; 
+ end fnGetValorCampoTabla;
+ 
+ 
+ function fnGetValorCampoTablaClob(proceso number,idTabla number,campoTabla varchar2,numReg number) return clob as   
+ sbres varchar2(1000) :='';
+ 
+ cursor cuDatoJson is 
+ select a.nro_registro,b.nombre_campo_json,d.tag_tabla_plural, b.id_tabla,valor,valorclob from cd_tabla_datos_json a , cd_detalle_tabla_json b, cd_tablas_estructura_json d
+ where a.id_detalle_json = b.id
+ and b.id_tabla = d.id
+ --and d.tipo_tabla  = tipoTabla 
+ and b.id_tabla = idTabla
+ and b.nombre_campo_json = campoTabla
+ and a.nro_registro = numReg;
+ 
+	sbValor  clob;
+ begin
+	
+	for  rgdato in cuDatoJson  loop
+		 sbValor := rgdato.valorclob;		
+	end loop;
+	
+	return sbValor;
+	
+	exception 
+	when others then 
+		return '';
+		
+ end fnGetValorCampoTablaClob;
+ 
  
  
  procedure cargaTabla(vproceso number) as 
@@ -159,14 +192,34 @@ begin
 									fnGetValorCampoTabla(vproceso,idtabla,'numdocperjur',nuReg)
 									);
 
+				guardarFacultades(vproceso,fnGetValorCampoTablaClob(vproceso,idtabla,'facultades',nuReg));
 				
 				nuReg := nuReg +1 ;
 			end loop;
 	end if;
 	 
-	if(vnombreproceso  = 'PRCSITUACIONESCONTROL') Then
-		null;
-		--procedmiento llena la tabla de proponente.
+	if(vnombreproceso  = 'PREXPERIENCIA') Then
+			
+			--procedmiento llena la tablas RPT_EXPERIENCIA
+			nuReg := 1;
+			
+			
+			
+			--recorro la itreacion de los registros de una tabla 1 a n registros. 
+			for rgdatos1 in 1 .. registrostabla loop
+				
+				guardarRptExperiencia(vproceso,
+									  fnGetValorCampoTabla(vproceso,idtabla,'secuencia',nuReg),
+									  fnGetValorCampoTabla(vproceso,idtabla,'nombrecontratante',nuReg),
+									  fnGetValorCampoTabla(vproceso,idtabla,'valor',nuReg),
+									  fnGetValorCampoTabla(vproceso,idtabla,'porcentaje',nuReg),
+									  fnGetValorCampoTabla(vproceso,idtabla,'celebradopor',nuReg),
+									  fnGetValorCampoTabla(vproceso,idtabla,'nombrecontratista',nuReg)
+									  );
+							
+				nuReg := nuReg +1 ;
+			end loop;
+		
 	end if;
 
 end llenarDatosProcedimiento;
@@ -313,7 +366,9 @@ begin
 end crearNombreProponente;
 
 
-
+/* *************************************************************
+  Descripcion : Procedimiento guardar RPT_PROPONENTE_PN
+ * **********************************************************/
 procedure crearRptProponentePn(vproceso number,P_NRO_IDENTIFICACION varchar2,P_TIPO_IDENTIFICACION varchar2,P_PAIS varchar2)  as 
 
 nunro_registro number ;
@@ -358,14 +413,17 @@ VALUES(
 end crearRptProponentePn;
 
 
+/* *************************************************************
+  Descripcion : Procedimiento guardar RPT_PROPONENTE_PJ
+ * **********************************************************/
 procedure crearRptProponentePj(vproceso number,P_FECHA_VENCIMIENTO varchar2,P_FECHA_DOCUMENTO varchar2,P_TIPO_DOCUMENTO varchar2,P_NRO_DOCUMENTO varchar2)  as 
 nunro_registro number ;
 
 begin 
 
+
  -- consultamos dato opcional del registro que esta en la camara.
  SELECT nro_proponente into nunro_registro FROM CD_JSON_CARGUE WHERE ID = vproceso;
-
 
 
 INSERT INTO RPT_PROPONENTE_PJ(
@@ -391,6 +449,114 @@ VALUES(
 
 
 end crearRptProponentePj;
+
+
+
+
+/* *************************************************************
+  Descripcion : Procedimiento guardar texto clob de factultades
+ * **********************************************************/
+ 
+procedure guardarFacultades(vproceso number,textoClob clob) as 
+
+P_Secuencia 	 number;
+P_TotalProcesado number;
+P_Cadenafija varchar2(500);
+nunro_registro number;
+n_totalcadena_aux number;
+
+begin
+	
+	-- consultamos dato opcional del registro que esta en la camara.
+	SELECT nro_proponente into nunro_registro FROM CD_JSON_CARGUE WHERE ID = vproceso;
+
+
+	
+	
+	select DBMS_LOB.getlength(textoClob) into n_totalcadena_aux  from dual;
+
+    P_Secuencia := 1;
+    P_TotalProcesado :=1;
+
+        while P_TotalProcesado  <=  n_totalcadena_aux loop
+              select Dbms_Lob.Substr(textoClob , 80, P_Totalprocesado )    into P_Cadenafija        from dual;
+              insert into rpt_facultad (registro,secuencia,descripcion) values (nunro_registro,P_Secuencia,UPPER(P_Cadenafija));
+              P_Totalprocesado := P_Totalprocesado + 80;
+              P_Secuencia := P_Secuencia  + 1;
+        end loop;
+
+end guardarFacultades;
+
+
+
+/* *************************************************************
+  Descripcion : Procedimiento guardar texto clob de rpt_experiencia
+ * **********************************************************/
+procedure guardarRptExperiencia(vproceso number,P_NRO_CONTRATO varchar2,P_NOMBRE_CONTRATANTE varchar2, P_VALOR_CONTRATO varchar2,P_PORCENTAJE varchar2,P_ID_TIPO_ENTIDAD varchar2,P_NOMBRE_CONTRATISTA varchar2) as 
+
+
+	nunro_registro number;
+
+begin
+	
+	-- consultamos dato opcional del registro que esta en la camara.
+	SELECT nro_proponente into nunro_registro FROM CD_JSON_CARGUE WHERE ID = vproceso;
+
+
+	--dbms_output.put_line(P_NRO_CONTRATO ||' * '|| P_NOMBRE_CONTRATANTE ||' * '|| P_VALOR_CONTRATO ||' * '|| P_PORCENTAJE ||' * '|| P_ID_TIPO_ENTIDAD ||' * '|| P_NOMBRE_CONTRATISTA);
+	INSERT INTO RPT_EXPERIENCIA
+	(
+	  REGISTRO,
+	  SECUENCIA,
+	  NRO_CONTRATO,
+	  NOMBRE_CONTRATANTE,
+	  VALOR_CONTRATO,
+	  SW_UNION_TEMPORAL,
+	  PORCENTAJE_UNION_TEMPORAL,
+	  VALOR_UNION_TEMPORAL,
+	  SW_FUSION_ESCISION,
+	  PORCENTAJE_FUSION_ESCISION,
+	  ID_TIPO_ENTIDAD,
+	  NOMBRE_CONTRATISTA,
+	  BORRADO,
+	  TIPO_CERTIFICACION,
+	  CERTIFICACION_CON_CLASIFICADOR,
+	  ID_SUB_TIPO_ENTIDAD,
+	  VALOR_CONTRATO_PESOS,
+	  FECHA_TERMINACION,
+	  OBJETO_CONTRATO,
+	  CIUDAD_EXPIDE,
+	  SW_NUEVO,
+	  LINK_SECOP
+	)
+	VALUES
+	(
+	  nunro_registro,
+	  SECUENCIA_RPT_EA.NEXTVAL, --secuencia
+	  P_NRO_CONTRATO,
+	  P_NOMBRE_CONTRATANTE, --nombrecontratante
+	  to_number(P_VALOR_CONTRATO, '9999999999D9999', 'NLS_NUMERIC_CHARACTERS='',.'''),
+	  DECODE(P_PORCENTAJE,'',0,1), --porcentaje
+	  to_number(P_PORCENTAJE, '9999999999D9999', 'NLS_NUMERIC_CHARACTERS='',.'''),
+	  NULL,
+	  0,
+	  NULL,
+	  P_ID_TIPO_ENTIDAD,--celebradopor
+	  P_NOMBRE_CONTRATISTA, --nombrecontratista
+	  0,
+	  NULL,
+	  NULL,
+	  NULL,
+	  NULL,
+	  NULL,
+	  NULL,
+	  NULL,
+	  NULL,
+	  NULL
+
+	);
+
+end guardarRptExperiencia; 
 
 END PKG_CD_CAMBIO_DOM;
 /
