@@ -18,9 +18,37 @@ CREATE OR REPLACE PACKAGE PKG_CD_CAMBIO_DOM AS
  procedure crearRptProponentePn(vproceso number,P_NRO_IDENTIFICACION varchar2,P_TIPO_IDENTIFICACION varchar2,P_PAIS varchar2);
  procedure crearRptProponentePj(vproceso number,P_FECHA_VENCIMIENTO varchar2,P_FECHA_DOCUMENTO varchar2,P_TIPO_DOCUMENTO varchar2,P_NRO_DOCUMENTO varchar2);
  procedure guardarFacultades(vproceso number,textoClob clob);
- procedure guardarRptExperiencia(vproceso number,P_NRO_CONTRATO varchar2,P_NOMBRE_CONTRATANTE varchar2, P_VALOR_CONTRATO varchar2,P_PORCENTAJE varchar2,P_ID_TIPO_ENTIDAD varchar2,P_NOMBRE_CONTRATISTA varchar2);
- 
- 
+ procedure guardarRptExperiencia(vproceso number,P_NRO_CONTRATO varchar2,P_NOMBRE_CONTRATANTE varchar2, P_VALOR_CONTRATO varchar2,P_PORCENTAJE varchar2,P_ID_TIPO_ENTIDAD varchar2,P_NOMBRE_CONTRATISTA varchar2,P_CLASIFICACION clob); 
+ procedure guardarClasExp(vproceso number,P_ID_EXPERIENCIA varchar2,P_CLASIFICACION clob);
+ procedure guardarContratos(vproceso number,
+  P_INSCRIPCION VARCHAR2, --numeroinscripcionlibro
+  P_NRO_CONTRATO VARCHAR2, --numerocontrato
+  P_FECHA_ADJUDICACION VARCHAR2, --fechaadjudicacion
+  P_FECHA_INICIO VARCHAR2, --fechainicio
+  P_FECHA_TERMINACION VARCHAR2, --fechaterminacion
+  P_CLASIFICACION VARCHAR2, --codigosunspsc
+  P_TIPO_CONTRATISTA VARCHAR2,--tipocontratista
+  P_VALOR VARCHAR2, --valorcontrato
+  P_VALOR_PAGADO VARCHAR2, --valorpagado
+  P_ESTADO VARCHAR2, --estadocontrato
+  P_FECHA_PERFECCIONAMIENTO VARCHAR2, --fechaperfeccionamiento
+  P_FECHA_LIQUIDACION VARCHAR2, --fechaliquidacion
+  P_MOT_TERM_ACT VARCHAR2, --motivoterminacionanticipada
+  P_FECHA_ACTO_TERMINACION_ANT VARCHAR2,--fechaterminacionanticipada
+  P_CODIGO_CAMARA VARCHAR2,--codigocamara
+  P_FECHA_INSCRIPCION VARCHAR2, --fechainscripcionlibro
+  P_FECHA_RADICACION_RUE VARCHAR2, --fecharadicacion
+  P_NIT_ENTIDAD VARCHAR2, --nitentidad
+  P_NRO_CONTRATO_SECOP VARCHAR2,--numerocontratosecop
+  P_OBJETO_CONTRATO VARCHAR2, --objeto
+  P_MOTIVO_CESION_CONTRATO  VARCHAR2,  --motivocesion
+  P_FECHA_CESION_CONTRATO VARCHAR2, --fechacesion
+  P_NOMBRE_ENTIDAD VARCHAR2, --nombreentidad
+  P_MUNICIPIO VARCHAR2,  --munientidad
+  P_AREA VARCHAR2        --divarea
+
+  
+ );
 
 END PKG_CD_CAMBIO_DOM;
 /
@@ -214,13 +242,63 @@ begin
 									  fnGetValorCampoTabla(vproceso,idtabla,'valor',nuReg),
 									  fnGetValorCampoTabla(vproceso,idtabla,'porcentaje',nuReg),
 									  fnGetValorCampoTabla(vproceso,idtabla,'celebradopor',nuReg),
-									  fnGetValorCampoTabla(vproceso,idtabla,'nombrecontratista',nuReg)
+									  fnGetValorCampoTabla(vproceso,idtabla,'nombrecontratista',nuReg),
+									  fnGetValorCampoTablaClob(vproceso,idtabla,'clasificaciones',nuReg)
 									  );
-							
+				
+								
 				nuReg := nuReg +1 ;
 			end loop;
 		
 	end if;
+	
+	
+		if(vnombreproceso  = 'PRCONTRATOSEE') Then
+			
+			--procedmiento llena la tablas RPT_EXPERIENCIA
+			nuReg := 1;
+			
+			
+			
+			--recorro la itreacion de los registros de una tabla 1 a n registros. 
+			for rgdatos1 in 1 .. registrostabla loop
+				
+				
+  
+				guardarContratos(	  vproceso,
+									  fnGetValorCampoTabla(vproceso,idtabla,'numeroinscripcionlibro',nuReg),
+									  fnGetValorCampoTabla(vproceso,idtabla,'numerocontrato',nuReg),
+									  fnGetValorCampoTabla(vproceso,idtabla,'fechaadjudicacion',nuReg),
+									  fnGetValorCampoTabla(vproceso,idtabla,'fechainicio',nuReg),
+									  fnGetValorCampoTabla(vproceso,idtabla,'fechaterminacion',nuReg),
+									  fnGetValorCampoTabla(vproceso,idtabla,'codigosunspsc',nuReg),
+									  fnGetValorCampoTabla(vproceso,idtabla,'tipocontratista',nuReg),
+									  fnGetValorCampoTabla(vproceso,idtabla,'valorcontrato',nuReg),
+									  fnGetValorCampoTabla(vproceso,idtabla,'valorpagado',nuReg),
+									  fnGetValorCampoTabla(vproceso,idtabla,'estadocontrato',nuReg),
+									  fnGetValorCampoTabla(vproceso,idtabla,'fechaperfeccionamiento',nuReg),
+									  fnGetValorCampoTabla(vproceso,idtabla,'fechaliquidacion',nuReg),
+									  fnGetValorCampoTabla(vproceso,idtabla,'motivoterminacionanticipada',nuReg),
+									  fnGetValorCampoTabla(vproceso,idtabla,'fechaterminacionanticipada',nuReg),
+									  fnGetValorCampoTabla(vproceso,idtabla,'codigocamara',nuReg),
+									  fnGetValorCampoTabla(vproceso,idtabla,'fechainscripcionlibro',nuReg),
+									  fnGetValorCampoTabla(vproceso,idtabla,'fecharadicacion',nuReg),
+									  fnGetValorCampoTabla(vproceso,idtabla,'nitentidad',nuReg),
+									  fnGetValorCampoTabla(vproceso,idtabla,'numerocontratosecop',nuReg),
+									  fnGetValorCampoTabla(vproceso,idtabla,'objeto',nuReg),
+									  fnGetValorCampoTabla(vproceso,idtabla,'motivocesion',nuReg),
+									  fnGetValorCampoTabla(vproceso,idtabla,'fechacesion',nuReg),
+									  fnGetValorCampoTabla(vproceso,idtabla,'nombreentidad',nuReg),
+									  fnGetValorCampoTabla(vproceso,idtabla,'munientidad',nuReg),
+									  fnGetValorCampoTabla(vproceso,idtabla,'divarea',nuReg)
+									  );
+				
+								
+				nuReg := nuReg +1 ;
+			end loop;
+		
+	end if;
+
 
 end llenarDatosProcedimiento;
 
@@ -492,11 +570,11 @@ end guardarFacultades;
 /* *************************************************************
   Descripcion : Procedimiento guardar texto clob de rpt_experiencia
  * **********************************************************/
-procedure guardarRptExperiencia(vproceso number,P_NRO_CONTRATO varchar2,P_NOMBRE_CONTRATANTE varchar2, P_VALOR_CONTRATO varchar2,P_PORCENTAJE varchar2,P_ID_TIPO_ENTIDAD varchar2,P_NOMBRE_CONTRATISTA varchar2) as 
+procedure guardarRptExperiencia(vproceso number,P_NRO_CONTRATO varchar2,P_NOMBRE_CONTRATANTE varchar2, P_VALOR_CONTRATO varchar2,P_PORCENTAJE varchar2,P_ID_TIPO_ENTIDAD varchar2,P_NOMBRE_CONTRATISTA varchar2,P_CLASIFICACION clob) as 
 
 
 	nunro_registro number;
-
+	nuSecExper number;
 begin
 	
 	-- consultamos dato opcional del registro que esta en la camara.
@@ -555,8 +633,198 @@ begin
 	  NULL
 
 	);
+	
+	
+	select SECUENCIA_RPT_EA.currval into nuSecExper  from dual;
+	
+	--guardar la clasificaciones.
+	guardarClasExp(vproceso,nuSecExper,P_CLASIFICACION);
+	
 
-end guardarRptExperiencia; 
+
+
+end guardarRptExperiencia;
+
+
+
+/* *************************************************************
+  Descripcion : Procedimiento guardar la información de las clasificaciones asociadas a una experiencia
+* **********************************************************/
+procedure guardarClasExp(vproceso number,P_ID_EXPERIENCIA varchar2,P_CLASIFICACION clob) as
+
+P_REGISTRO number;
+  clasificacion varchar2(10);
+  segmento      varchar2(2);
+  familia       varchar2(2);
+  clase         varchar2(2);
+  
+  --Cursor que se encarga de separar los grupos de clasificacione por el separador ,
+   cursor cr_clasificaciones is
+   WITH CL AS (SELECT P_CLASIFICACION clasificacion FROM DUAL)
+    SELECT TRIM(REGEXP_SUBSTR(clasificacion, '[^,]+', 1, level)) clasificacion
+    FROM CL
+    CONNECT BY level <= REGEXP_COUNT(clasificacion, '[^,]+')
+           AND PRIOR DBMS_RANDOM.VALUE IS NOT NULL;
+
+BEGIN
+
+-- Se consulta el número de registro asociado al proponente que se carga
+SELECT nro_proponente into P_REGISTRO FROM CD_JSON_CARGUE WHERE ID = vproceso;
+
+  --Se recorre el cursor de clasificaciones para obtener los respectivos valores de segmento, familia y clase
+    FOR c IN cr_clasificaciones LOOP
+        --dbms_output.put_line(c.clasificacion);
+        segmento:=SUBSTR(c.clasificacion,0,2);
+        familia:=SUBSTR(c.clasificacion,3,2);
+        clase:=SUBSTR(c.clasificacion,5,2);
+		
+        INSERT INTO RPT_CLASIFICACION_EXP
+        (
+            SECUENCIA,
+            ID_EXPERIENCIA,
+            SEGMENTO,
+            FAMILIA,
+            CLASE,
+            REGISTRO
+        )
+        VALUES
+        (
+            SECUENCIA_RPT_EA.NEXTVAL,
+            P_ID_EXPERIENCIA,
+            segmento,
+            familia,
+            clase,
+            P_REGISTRO
+        );
+  END LOOP;
+
+END guardarClasExp;
+
+
+
+/* *************************************************************
+  Descripcion : Procedimiento guardar la información de los contratos
+ * **********************************************************/
+procedure guardarContratos(vproceso number,
+  P_INSCRIPCION VARCHAR2, --numeroinscripcionlibro
+  P_NRO_CONTRATO VARCHAR2, --numerocontrato
+  P_FECHA_ADJUDICACION VARCHAR2, --fechaadjudicacion
+  P_FECHA_INICIO VARCHAR2, --fechainicio
+  P_FECHA_TERMINACION VARCHAR2, --fechaterminacion
+  P_CLASIFICACION VARCHAR2, --codigosunspsc
+  P_TIPO_CONTRATISTA VARCHAR2,--tipocontratista
+  P_VALOR VARCHAR2, --valorcontrato
+  P_VALOR_PAGADO VARCHAR2, --valorpagado
+  P_ESTADO VARCHAR2, --estadocontrato
+  P_FECHA_PERFECCIONAMIENTO VARCHAR2, --fechaperfeccionamiento
+  P_FECHA_LIQUIDACION VARCHAR2, --fechaliquidacion
+  P_MOT_TERM_ACT VARCHAR2, --motivoterminacionanticipada
+  P_FECHA_ACTO_TERMINACION_ANT VARCHAR2,--fechaterminacionanticipada
+  P_CODIGO_CAMARA VARCHAR2,--codigocamara
+  P_FECHA_INSCRIPCION VARCHAR2, --fechainscripcionlibro
+  P_FECHA_RADICACION_RUE VARCHAR2, --fecharadicacion
+  P_NIT_ENTIDAD VARCHAR2, --nitentidad
+  P_NRO_CONTRATO_SECOP VARCHAR2,--numerocontratosecop
+  P_OBJETO_CONTRATO VARCHAR2, --objeto
+  P_MOTIVO_CESION_CONTRATO  VARCHAR2,  --motivocesion
+  P_FECHA_CESION_CONTRATO VARCHAR2, --fechacesion
+  P_NOMBRE_ENTIDAD VARCHAR2, --nombreentidad
+  P_MUNICIPIO VARCHAR2,  --munientidad
+  P_AREA VARCHAR2        --divarea  
+) as
+
+P_REGISTRO number;
+ BEGIN
+   -- Se consulta el número de registro asociado al proponente que se carga
+	SELECT nro_proponente into P_REGISTRO FROM CD_JSON_CARGUE WHERE ID = vproceso;
+	  INSERT INTO RPT_CONTRATO
+	(
+	  CONSECUTIVO_REPORTE,
+	  REGISTRO,
+	  INSCRIPCION,
+	  NRO_CONTRATO,
+	  NIT_PROPONENTE,
+	  FECHA_ADJUDICACION,
+	  FECHA_INICIO,
+	  FECHA_TERMINACION,
+	  CLASIFICACION,
+	  TIPO_CONTRATISTA,
+	  VALOR,
+	  VALOR_PAGADO,
+	  INDICADOR_CUMPLIMIENTO,
+	  ESTADO,
+	  INDICADOR_ENVIO,
+	  TIPO_IDENTIFICACION,
+	  FECHA_PERFECCIONAMIENTO,
+	  FECHA_LIQUIDACION,
+	  CODIGO_ACTIVIDAD,
+	  CODIGO_CIIU,
+	  MOTIVO_TERMINACION_ANTICIPADA,
+	  FECHA_ACTO_TERMINACION_ANT,
+	  OBSERVACIONES,
+	  CODIGO_CAMARA,
+	  CODIGO_LIBRO_REGISTRADO,
+	  FECHA_INSCRIPCION,
+	  FECHA_RADICACION_RUE,
+	  NRO_RADICACION_RUE,
+	  SW_DECRETO734,
+	  NIT_ENTIDAD,
+	  SW_RUES,
+	  NRO_CONTRATO_SECOP,
+	  CLASIFICADOR_BS,
+	  OBJETO_CONTRATO,
+	  MOTIVO_CESION_CONTRATO,
+	  FECHA_CESION_CONTRATO,
+	  CONTRATO_RELACIONADO,
+	  NOMBRE_ENTIDAD,
+	  MUNICIPIO_ENTIDAD,
+	  AREA_ENTIDAD
+
+	)
+	VALUES
+	(
+	  0,
+	  P_REGISTRO,
+	  P_INSCRIPCION, --numeroinscripcionlibro
+	  P_NRO_CONTRATO, --numerocontrato
+	  NULL,
+	  TO_DATE(P_FECHA_ADJUDICACION,'YYYYMMDD'), --fechaadjudicacion
+	  TO_DATE(P_FECHA_INICIO,'YYYYMMDD'), --fechainicio
+	  TO_DATE(P_FECHA_TERMINACION,'YYYYMMDD'), --fechaterminacion
+	  P_CLASIFICACION, --codigosunspsc
+	  P_TIPO_CONTRATISTA,--tipocontratista
+	  P_VALOR, --valorcontrato
+	  P_VALOR_PAGADO, --valorpagado
+	  NULL,
+	  P_ESTADO, --estadocontrato
+	  NULL,
+	  NULL,
+	  TO_DATE(P_FECHA_PERFECCIONAMIENTO,'YYYYMMDD'), --fechaperfeccionamiento
+	  TO_DATE(P_FECHA_LIQUIDACION,'YYYYMMDD'), --fechaliquidacion
+	  NULL,
+	  NULL,
+	  from_base64(P_MOT_TERM_ACT), --motivoterminacionanticipada
+	  TO_DATE(P_FECHA_ACTO_TERMINACION_ANT,'YYYYMMDD'),--fechaterminacionanticipada
+	  NULL,
+	  P_CODIGO_CAMARA,--codigocamara
+	  NULL,
+	  TO_DATE(P_FECHA_INSCRIPCION,'YYYYMMDD'), --fechainscripcionlibro
+	  TO_DATE(P_FECHA_RADICACION_RUE,'YYYYMMDD'), --fecharadicacion
+	  NULL,
+	  NULL,
+	  P_NIT_ENTIDAD, --nitentidad
+	  NULL,
+	  P_NRO_CONTRATO_SECOP,--numerocontratosecop
+	  NULL,
+	  from_base64(P_OBJETO_CONTRATO), --objeto
+	  from_base64(P_MOTIVO_CESION_CONTRATO),  --motivocesion
+	  TO_DATE(P_FECHA_CESION_CONTRATO,'YYYYMMDD'), --fechacesion  
+	  NULL,
+	  P_NOMBRE_ENTIDAD, --nombreentidad
+	  P_MUNICIPIO,  --munientidad
+      P_AREA        --divarea
+	);
+END guardarContratos;
 
 END PKG_CD_CAMBIO_DOM;
 /

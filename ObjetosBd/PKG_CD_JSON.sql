@@ -278,9 +278,10 @@ CREATE OR REPLACE PACKAGE BODY PKG_CD_JSON AS
 		
 		exception 
 		when no_data_found then
-			guardaProceso(jsonid,NULL,'JSON ERR : NO SE ENCONTRARON REGISTORS ');
+			guardaProceso(jsonid,NULL,'JSON ERR : NO SE ENCONTRARON REGISTROS ');
 			RAISE_APPLICATION_ERROR(-20000, 'JSON ERR : NO SE ENCONTRARON REGISTROS '||vsqlxml);
 		when others then
+			--dbms_output.put_line(vsqlxml); TODO INSERTAR EN UN CLOB EL SQL.
 			guardaProceso(jsonid,NULL,'JSON ERR : ERROR EJECUTANDO QUERY XML ');
 
 			RAISE_APPLICATION_ERROR(-20000, 'JSON ERR : ERROR EJECUTANDO QUERY XML '||vsqlxml);
