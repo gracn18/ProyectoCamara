@@ -46,10 +46,11 @@ CREATE OR REPLACE PACKAGE PKG_CD_CAMBIO_DOM AS
   P_NOMBRE_ENTIDAD VARCHAR2, --nombreentidad
   P_MUNICIPIO VARCHAR2,  --munientidad
   P_AREA VARCHAR2        --divarea
-
-  
  );
 
+
+ procedure guardarRtpInfFinanciera(vproceso number,P_TIPO_INF_FINANCIERA varchar2, P_FECHA varchar2,P_VALOR varchar2);
+ 
 END PKG_CD_CAMBIO_DOM;
 /
 
@@ -140,7 +141,9 @@ function fnGetValorCampoTabla(proceso number,idTabla number,campoTabla varchar2,
 
 procedure llenarDatosProcedimiento(vproceso number,vnombreproceso varchar2,idtabla number,registrostabla number) as 
 
-	nuReg NUMBER ;
+	nuReg NUMBER(15);
+	sbFEcha varchar2(20) := '';
+	
 begin
 
 	if(vnombreproceso = 'PRCPROPONENTE') Then
@@ -299,6 +302,48 @@ begin
 		
 	end if;
 
+
+	if(vnombreproceso  = 'PRINFOFINANCIERA') Then
+			
+			--procedmiento llena la tablas RPT_EXPERIENCIA
+			nuReg := 1;
+			
+			
+			
+			--recorro la itreacion de los registros de una tabla 1 a n registros. 
+			for rgdatos1 in 1 .. registrostabla loop
+				
+				sbFEcha := fnGetValorCampoTabla(vproceso,idtabla,'inffin_fechacorte',nuReg) ;
+				
+				guardarRtpInfFinanciera(vproceso,0,sbFEcha,fnGetValorCampoTabla(vproceso,idtabla,'inffin_actcte',nuReg));
+
+				guardarRtpInfFinanciera(vproceso,55,sbFEcha,fnGetValorCampoTabla(vproceso,idtabla,'inffin_actnocte',nuReg));
+				
+				guardarRtpInfFinanciera(vproceso,4,sbFEcha,fnGetValorCampoTabla(vproceso,idtabla,'inffin_acttot',nuReg));
+										
+				guardarRtpInfFinanciera(vproceso,56,sbFEcha,fnGetValorCampoTabla(vproceso,idtabla,'inffin_balsoc',nuReg));	
+				
+				guardarRtpInfFinanciera(vproceso,9,sbFEcha,fnGetValorCampoTabla(vproceso,idtabla,'inffin_paspat',nuReg));	
+				
+				guardarRtpInfFinanciera(vproceso,5,sbFEcha, fnGetValorCampoTabla(vproceso,idtabla,'inffin_pascte',nuReg));
+										
+				guardarRtpInfFinanciera(vproceso,7,sbFEcha,fnGetValorCampoTabla(vproceso,idtabla,'inffin_pastot',nuReg));
+
+				guardarRtpInfFinanciera(vproceso,8,sbFEcha,fnGetValorCampoTabla(vproceso,idtabla,'inffin_patnet',nuReg));
+
+				guardarRtpInfFinanciera(vproceso,54,sbFEcha,fnGetValorCampoTabla(vproceso,idtabla,'inffin_renact',nuReg));
+
+				guardarRtpInfFinanciera(vproceso,53,sbFEcha,fnGetValorCampoTabla(vproceso,idtabla,'inffin_renpat',nuReg));
+										
+				guardarRtpInfFinanciera(vproceso,20,sbFEcha,fnGetValorCampoTabla(vproceso,idtabla,'inffin_utiope',nuReg));
+				
+				guardarRtpInfFinanciera(vproceso,28,sbFEcha,fnGetValorCampoTabla(vproceso,idtabla,'inffin_utinet',nuReg));
+										
+											
+				nuReg := nuReg +1 ;
+			end loop;
+		
+	end if;
 
 end llenarDatosProcedimiento;
 
@@ -621,7 +666,7 @@ begin
 	  NULL,
 	  P_ID_TIPO_ENTIDAD,--celebradopor
 	  P_NOMBRE_CONTRATISTA, --nombrecontratista
-	  0,
+	  1,
 	  NULL,
 	  NULL,
 	  NULL,
@@ -629,7 +674,7 @@ begin
 	  NULL,
 	  NULL,
 	  NULL,
-	  NULL,
+	  1,
 	  NULL
 
 	);
@@ -737,7 +782,8 @@ P_REGISTRO number;
  BEGIN
    -- Se consulta el número de registro asociado al proponente que se carga
 	SELECT nro_proponente into P_REGISTRO FROM CD_JSON_CARGUE WHERE ID = vproceso;
-	  INSERT INTO RPT_CONTRATO
+	
+	INSERT INTO RPT_CONTRATO
 	(
 	  CONSECUTIVO_REPORTE,
 	  REGISTRO,
@@ -825,6 +871,44 @@ P_REGISTRO number;
       P_AREA        --divarea
 	);
 END guardarContratos;
+
+
+
+/* *************************************************************
+  Descripcion : Procedimiento guardar la información de info financiera.
+ * **********************************************************/
+procedure  guardarRtpInfFinanciera(vproceso number,P_TIPO_INF_FINANCIERA varchar2,P_FECHA varchar2,P_VALOR varchar2) as 
+
+nrro_proponente number;
+
+begin
+	   -- Se consulta el número de registro asociado al proponente que se carga
+	SELECT nro_proponente into nrro_proponente FROM CD_JSON_CARGUE WHERE ID = vproceso;
+	
+	
+	--DBMS_OUTPUT.PUT_LINE('::'||P_VALOR);
+	if(P_VALOR is not null )then
+	
+		INSERT INTO RPT_INF_FINANCIERA 
+		(
+		  REGISTRO,
+		  TIPO_INF_FINANCIERA,
+		  ANO,
+		  VALOR,
+		  FECHA,
+		  VALOR_COP
+		)
+		VALUES
+		(
+		  nrro_proponente,
+		  P_TIPO_INF_FINANCIERA, 
+		  TO_CHAR(TO_DATE(P_FECHA,'YYYYMMDD'),'YYYY'),--inffin_fechacorte sacar solo el año
+		  to_number(P_VALOR, '9999999999D99', 'NLS_NUMERIC_CHARACTERS='',.'''),
+		  TO_DATE(P_FECHA,'YYYYMMDD'),--inffin_fechacorte
+		  NULL
+		);
+	end if;
+end guardarRtpInfFinanciera;
 
 END PKG_CD_CAMBIO_DOM;
 /
