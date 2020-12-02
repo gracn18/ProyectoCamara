@@ -254,10 +254,30 @@ procedure llenarDatosProcedimiento(vproceso number,vnombreproceso varchar2,idtab
 	nuReg NUMBER(15);
 	sbFEcha varchar2(20) := '';
 	
+	
+	
+	cursor curNroProponente is 
+	SELECT a.nro_proponente,b.matricula,b.tipo_juridico FROM CD_JSON_CARGUE a, RPT_PROPONENTE  b
+	WHERE a.id = vproceso and   b.registro = a.nro_proponente;
+	
+    
+	rgDatosMatricula curNroProponente%rowtype;
+	
+	sbGrabar boolean := true;
+	
+
 begin
 
 	if(vnombreproceso = 'PRCPROPONENTE') Then
 		 
+			open curNroProponente;
+			fetch curNroProponente into rgDatosMatricula;
+			close curNroProponente;
+			
+			if rgDatosMatricula.matricula > 0 then
+				sbGrabar := false;
+			end if;
+			
 			--procedmiento llena la tabla de proponente.
 			nuReg := 1;
 			
@@ -281,35 +301,38 @@ begin
 				);
 			
 				
+				if(sbGrabar) then --se graba cuando el proponente no esta asociado a un inscrito
+						crearDirecciones(vproceso,
+										 2,
+										 fnGetValorCampoTabla(vproceso,idtabla,'muncom',nuReg),
+										 fnGetValorCampoTabla(vproceso,idtabla,'dircom',nuReg),
+										 fnGetValorCampoTabla(vproceso,idtabla,'telcom1',nuReg),
+										 fnGetValorCampoTabla(vproceso,idtabla,'emailcom',nuReg),
+										 fnGetValorCampoTabla(vproceso,idtabla,'telcom2',nuReg),
+										 fnGetValorCampoTabla(vproceso,idtabla,'telcom3',nuReg),
+										 fnGetValorCampoTabla(vproceso,idtabla,'zonacom',nuReg),
+										 fnGetValorCampoTabla(vproceso,idtabla,'codposcom',nuReg),
+										 fnGetValorCampoTabla(vproceso,idtabla,'ubicom',nuReg),
+										 fnGetValorCampoTabla(vproceso,idtabla,'barriocom',nuReg)
+										 );
 			
-				crearDirecciones(vproceso,
-								 2,
-								 fnGetValorCampoTabla(vproceso,idtabla,'muncom',nuReg),
-								 fnGetValorCampoTabla(vproceso,idtabla,'dircom',nuReg),
-								 fnGetValorCampoTabla(vproceso,idtabla,'telcom1',nuReg),
-								 fnGetValorCampoTabla(vproceso,idtabla,'emailcom',nuReg),
-								 fnGetValorCampoTabla(vproceso,idtabla,'telcom2',nuReg),
-								 fnGetValorCampoTabla(vproceso,idtabla,'telcom3',nuReg),
-								 fnGetValorCampoTabla(vproceso,idtabla,'zonacom',nuReg),
-								 fnGetValorCampoTabla(vproceso,idtabla,'codposcom',nuReg),
-								 fnGetValorCampoTabla(vproceso,idtabla,'ubicom',nuReg),
-								 fnGetValorCampoTabla(vproceso,idtabla,'barriocom',nuReg)
-								 );
-
-				crearDirecciones(vproceso,
-								 1,
-								 fnGetValorCampoTabla(vproceso,idtabla,'munnot',nuReg),
-								 fnGetValorCampoTabla(vproceso,idtabla,'dirnot',nuReg),
-								 fnGetValorCampoTabla(vproceso,idtabla,'telnot1',nuReg),
-								 fnGetValorCampoTabla(vproceso,idtabla,'emailnot',nuReg),
-								 fnGetValorCampoTabla(vproceso,idtabla,'telnot2',nuReg),
-								 fnGetValorCampoTabla(vproceso,idtabla,'telnot3',nuReg),
-								 fnGetValorCampoTabla(vproceso,idtabla,'zonanot',nuReg),
-								 fnGetValorCampoTabla(vproceso,idtabla,'codposnot',nuReg),
-								 fnGetValorCampoTabla(vproceso,idtabla,'ubinot',nuReg),
-								 fnGetValorCampoTabla(vproceso,idtabla,'barrionot',nuReg)
-								 );
-					
+						crearDirecciones(vproceso,
+										 1,
+										 fnGetValorCampoTabla(vproceso,idtabla,'munnot',nuReg),
+										 fnGetValorCampoTabla(vproceso,idtabla,'dirnot',nuReg),
+										 fnGetValorCampoTabla(vproceso,idtabla,'telnot1',nuReg),
+										 fnGetValorCampoTabla(vproceso,idtabla,'emailnot',nuReg),
+										 fnGetValorCampoTabla(vproceso,idtabla,'telnot2',nuReg),
+										 fnGetValorCampoTabla(vproceso,idtabla,'telnot3',nuReg),
+										 fnGetValorCampoTabla(vproceso,idtabla,'zonanot',nuReg),
+										 fnGetValorCampoTabla(vproceso,idtabla,'codposnot',nuReg),
+										 fnGetValorCampoTabla(vproceso,idtabla,'ubinot',nuReg),
+										 fnGetValorCampoTabla(vproceso,idtabla,'barrionot',nuReg)
+										 );
+				end if;
+				
+				
+				---todo otra condicion.
 				crearNombreProponente(vproceso,
 									 fnGetValorCampoTabla(vproceso,idtabla,'nombre_o_razon_social',nuReg),
 									 fnGetValorCampoTabla(vproceso,idtabla,'nom2',nuReg),
@@ -318,22 +341,27 @@ begin
 									 fnGetValorCampoTabla(vproceso,idtabla,'ape1',nuReg)
 									);
 								
-				
-				crearRptProponentePn(vproceso,
-									 fnGetValorCampoTabla(vproceso,idtabla,'identificacion',nuReg),
-									 fnGetValorCampoTabla(vproceso,idtabla,'tipoidentificacion',nuReg),
-									 fnGetValorCampoTabla(vproceso,idtabla,'idpaisidentificacion',nuReg)
-									 );
-									 
+				if rgDatosMatricula.tipo_juridico = 1 then
+					crearRptProponentePn(vproceso,
+										 fnGetValorCampoTabla(vproceso,idtabla,'identificacion',nuReg),
+										 fnGetValorCampoTabla(vproceso,idtabla,'tipoidentificacion',nuReg),
+										 fnGetValorCampoTabla(vproceso,idtabla,'idpaisidentificacion',nuReg)
+										 );
+										 
+				else
 
-				crearRptProponentePj(vproceso,
-									fnGetValorCampoTabla(vproceso,idtabla,'fechavencimiento',nuReg),
-									fnGetValorCampoTabla(vproceso,idtabla,'fecdocperjur',nuReg),
-									fnGetValorCampoTabla(vproceso,idtabla,'tipodocperjur',nuReg),
-									fnGetValorCampoTabla(vproceso,idtabla,'numdocperjur',nuReg)
-									);
+					crearRptProponentePj(vproceso,
+										fnGetValorCampoTabla(vproceso,idtabla,'fechavencimiento',nuReg),
+										fnGetValorCampoTabla(vproceso,idtabla,'fecdocperjur',nuReg),
+										fnGetValorCampoTabla(vproceso,idtabla,'tipodocperjur',nuReg),
+										fnGetValorCampoTabla(vproceso,idtabla,'numdocperjur',nuReg)
+										);
+									
+				end if;
 
-				guardarFacultades(vproceso,fnGetValorCampoTablaClob(vproceso,idtabla,'facultades',nuReg));
+				if(sbGrabar) then --se graba cuando el proponente no esta asociado a un inscrito
+					guardarFacultades(vproceso,fnGetValorCampoTablaClob(vproceso,idtabla,'facultades',nuReg));
+				end if;
 				
 				nuReg := nuReg +1 ;
 			end loop;
@@ -419,40 +447,54 @@ begin
 			nuReg := 1;
 			
 			
+					 
+			open curNroProponente;
+			fetch curNroProponente into rgDatosMatricula;
+			close curNroProponente;
 			
-			--recorro la itreacion de los registros de una tabla 1 a n registros. 
-			for rgdatos1 in 1 .. registrostabla loop
-				
-				sbFEcha := fnGetValorCampoTabla(vproceso,idtabla,'inffin_fechacorte',nuReg) ;
-				
-				guardarRtpInfFinanciera(vproceso,0,sbFEcha,fnGetValorCampoTabla(vproceso,idtabla,'inffin_actcte',nuReg));
+			if rgDatosMatricula.matricula > 0 then
+				sbGrabar := false;
+			end if;
+			
+			if(sbGrabar) then --se graba cuando el proponente no esta asociado a un inscrito
+				--recorro la itreacion de los registros de una tabla 1 a n registros. 
+				for rgdatos1 in 1 .. registrostabla loop
+					
+					sbFEcha := fnGetValorCampoTabla(vproceso,idtabla,'inffin_fechacorte',nuReg) ;
+					
+					guardarRtpInfFinanciera(vproceso,0,sbFEcha,fnGetValorCampoTabla(vproceso,idtabla,'inffin_actcte',nuReg));
 
-				guardarRtpInfFinanciera(vproceso,55,sbFEcha,fnGetValorCampoTabla(vproceso,idtabla,'inffin_actnocte',nuReg));
-				
-				guardarRtpInfFinanciera(vproceso,4,sbFEcha,fnGetValorCampoTabla(vproceso,idtabla,'inffin_acttot',nuReg));
-										
-				guardarRtpInfFinanciera(vproceso,56,sbFEcha,fnGetValorCampoTabla(vproceso,idtabla,'inffin_balsoc',nuReg));	
-				
-				guardarRtpInfFinanciera(vproceso,9,sbFEcha,fnGetValorCampoTabla(vproceso,idtabla,'inffin_paspat',nuReg));	
-				
-				guardarRtpInfFinanciera(vproceso,5,sbFEcha, fnGetValorCampoTabla(vproceso,idtabla,'inffin_pascte',nuReg));
-										
-				guardarRtpInfFinanciera(vproceso,7,sbFEcha,fnGetValorCampoTabla(vproceso,idtabla,'inffin_pastot',nuReg));
-
-				guardarRtpInfFinanciera(vproceso,8,sbFEcha,fnGetValorCampoTabla(vproceso,idtabla,'inffin_patnet',nuReg));
-
-				guardarRtpInfFinanciera(vproceso,54,sbFEcha,fnGetValorCampoTabla(vproceso,idtabla,'inffin_renact',nuReg));
-
-				guardarRtpInfFinanciera(vproceso,53,sbFEcha,fnGetValorCampoTabla(vproceso,idtabla,'inffin_renpat',nuReg));
-										
-				guardarRtpInfFinanciera(vproceso,20,sbFEcha,fnGetValorCampoTabla(vproceso,idtabla,'inffin_utiope',nuReg));
-				
-				guardarRtpInfFinanciera(vproceso,28,sbFEcha,fnGetValorCampoTabla(vproceso,idtabla,'inffin_utinet',nuReg));
-										
+					guardarRtpInfFinanciera(vproceso,55,sbFEcha,fnGetValorCampoTabla(vproceso,idtabla,'inffin_actnocte',nuReg));
+					
+					guardarRtpInfFinanciera(vproceso,4,sbFEcha,fnGetValorCampoTabla(vproceso,idtabla,'inffin_acttot',nuReg));
 											
-				nuReg := nuReg +1 ;
-			end loop;
-		
+					guardarRtpInfFinanciera(vproceso,56,sbFEcha,fnGetValorCampoTabla(vproceso,idtabla,'inffin_balsoc',nuReg));	
+					
+					guardarRtpInfFinanciera(vproceso,9,sbFEcha,fnGetValorCampoTabla(vproceso,idtabla,'inffin_paspat',nuReg));	
+					
+					guardarRtpInfFinanciera(vproceso,5,sbFEcha, fnGetValorCampoTabla(vproceso,idtabla,'inffin_pascte',nuReg));
+											
+					guardarRtpInfFinanciera(vproceso,7,sbFEcha,fnGetValorCampoTabla(vproceso,idtabla,'inffin_pastot',nuReg));
+
+					guardarRtpInfFinanciera(vproceso,8,sbFEcha,fnGetValorCampoTabla(vproceso,idtabla,'inffin_patnet',nuReg));
+
+					guardarRtpInfFinanciera(vproceso,54,sbFEcha,fnGetValorCampoTabla(vproceso,idtabla,'inffin_renact',nuReg));
+
+					guardarRtpInfFinanciera(vproceso,53,sbFEcha,fnGetValorCampoTabla(vproceso,idtabla,'inffin_renpat',nuReg));
+											
+					guardarRtpInfFinanciera(vproceso,20,sbFEcha,fnGetValorCampoTabla(vproceso,idtabla,'inffin_utiope',nuReg));
+					
+					guardarRtpInfFinanciera(vproceso,28,sbFEcha,fnGetValorCampoTabla(vproceso,idtabla,'inffin_utinet',nuReg));
+					
+					guardarRtpInfFinanciera(vproceso,24,sbFEcha,fnGetValorCampoTabla(vproceso,idtabla,'inffin_indliq',nuReg));
+					
+					
+
+					
+												
+					nuReg := nuReg +1 ;
+				end loop;
+			end if;
 	end if;
 	
 	
@@ -611,29 +653,39 @@ begin
 			nuReg := 1;
 			
 			
+			open curNroProponente;
+			fetch curNroProponente into rgDatosMatricula;
+			close curNroProponente;
 			
-			--recorro la itreacion de los registros de una tabla 1 a n registros. 
-			for rgdatos1 in 1 .. registrostabla loop
-				
+			if rgDatosMatricula.matricula > 0 then
+				sbGrabar := false;
+			end if;
+			
+			
+			if(sbGrabar) then --se graba cuando el proponente no esta asociado a un inscrito
+				--recorro la itreacion de los registros de una tabla 1 a n registros. 
+				for rgdatos1 in 1 .. registrostabla loop
+					
 
- 
-				guardarRepreentantes(
-								vproceso ,
-								nuReg,
-								fnGetValorCampoTabla(vproceso,idtabla,'tipoidentificacion',nuReg),
-								fnGetValorCampoTabla(vproceso,idtabla,'identificacion',nuReg),
-								fnGetValorCampoTabla(vproceso,idtabla,'nom1',nuReg),
-								fnGetValorCampoTabla(vproceso,idtabla,'nom2',nuReg),
-								fnGetValorCampoTabla(vproceso,idtabla,'ape1',nuReg),
-								fnGetValorCampoTabla(vproceso,idtabla,'ape2',nuReg)
-						);
-								
+	 
+					guardarRepreentantes(
+									vproceso ,
+									nuReg,
+									fnGetValorCampoTabla(vproceso,idtabla,'tipoidentificacion',nuReg),
+									fnGetValorCampoTabla(vproceso,idtabla,'identificacion',nuReg),
+									fnGetValorCampoTabla(vproceso,idtabla,'nom1',nuReg),
+									fnGetValorCampoTabla(vproceso,idtabla,'nom2',nuReg),
+									fnGetValorCampoTabla(vproceso,idtabla,'ape1',nuReg),
+									fnGetValorCampoTabla(vproceso,idtabla,'ape2',nuReg)
+							);
+									
 
 
 
-  
-				nuReg := nuReg +1 ;
-			end loop;
+	  
+					nuReg := nuReg +1 ;
+				end loop;
+			end if;
 		
 	end if;
 	
@@ -882,7 +934,7 @@ VALUES(
   nunro_registro,
   DECODE(P_FECHA_VENCIMIENTO,99991231,NULL,TO_DATE(P_FECHA_VENCIMIENTO,'YYYYMMDD')),  --fechavencimiento
   DECODE(P_FECHA_VENCIMIENTO,99991231,1,0), --fechavencimiento
-  P_FECHA_DOCUMENTO,--fecdocperjur
+  TO_DATE(P_FECHA_DOCUMENTO,'YYYYMMDD'),--fecdocperjur
   P_TIPO_DOCUMENTO, --tipodocperjur
   NULL,
   P_NRO_DOCUMENTO,--numdocperjur
