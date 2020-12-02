@@ -177,7 +177,7 @@ public class JsonplUtil {
 				
 				//QUERY DE SUB TABLAS PRINCIPAL
 				rs=stmt.executeQuery("select ID,Upper(TAG_TABLA_PLURAL) tablaplural,TIPO_TABLA,TAG_TABLA_SINGULAR from cd_tablas_estructura_json\r\n"
-						+ "where id_maestrojson = "+idMaestraJson+ " and TIPO_TABLA = 'S'");
+						+ "where id_maestrojson = "+idMaestraJson+ " and TIPO_TABLA  in ('S','U')");
 				
 		
 				 String tagsutabla = null;
@@ -196,16 +196,39 @@ public class JsonplUtil {
 					try {
 						
 						JSONObject tbsubtabla = tbprinciapal.getJSONObject(tagsutabla);
-						
-						JSONArray arreglodatos = tbsubtabla.getJSONArray(tagsingular);
-						
-						//recorre todos los datos cuando es una subtabla
-						for(int i=0;i<=arreglodatos.length();i++) {
-							JSONObject objetojson = (JSONObject) arreglodatos.get(i);
-							
-							respp += traerfieldstablas(con,tagsutabla,tagsingular,idproceso,idMaestraJson,idtabla ,tipoTabla,objetojson,i+1);
+						JSONArray arreglodatos;
+						try {
+							arreglodatos = tbsubtabla.getJSONArray(tagsingular);
 							
 						}
+						catch (JSONException e) {
+							arreglodatos = null;
+						}
+						
+						if(arreglodatos == null) {
+							JSONObject objetojson = null;
+						
+							if(tipoTabla.equals("U")) {
+								objetojson= tbsubtabla;
+								
+							}
+							
+							if(tipoTabla.equals("S")) {
+								objetojson= tbsubtabla.getJSONObject(tagsingular);
+							}
+							
+							traerfieldstablas(con,tagsutabla,tagsingular,idproceso,idMaestraJson,idtabla ,tipoTabla,objetojson,1);
+						}else {
+							
+							//recorre todos los datos cuando es una subtabla
+							for(int i=0;i<=arreglodatos.length();i++) {
+								JSONObject objetojson = (JSONObject) arreglodatos.get(i);
+								respp += traerfieldstablas(con,tagsutabla,tagsingular,idproceso,idMaestraJson,idtabla ,tipoTabla,objetojson,i+1);
+								
+							}
+						}
+						
+				
 
 					}
 					catch (JSONException e) {
