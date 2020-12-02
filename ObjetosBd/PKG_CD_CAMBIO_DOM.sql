@@ -20,6 +20,7 @@ CREATE OR REPLACE PACKAGE PKG_CD_CAMBIO_DOM AS
  procedure guardarFacultades(vproceso number,textoClob clob);
  procedure guardarRptExperiencia(vproceso number,P_NRO_CONTRATO varchar2,P_NOMBRE_CONTRATANTE varchar2, P_VALOR_CONTRATO varchar2,P_PORCENTAJE varchar2,P_ID_TIPO_ENTIDAD varchar2,P_NOMBRE_CONTRATISTA varchar2,P_CLASIFICACION clob); 
  procedure guardarClasExp(vproceso number,P_ID_EXPERIENCIA varchar2,P_CLASIFICACION clob);
+ 
  procedure guardarContratos(vproceso number,
   P_INSCRIPCION VARCHAR2, --numeroinscripcionlibro
   P_NRO_CONTRATO VARCHAR2, --numerocontrato
@@ -51,6 +52,115 @@ CREATE OR REPLACE PACKAGE PKG_CD_CAMBIO_DOM AS
 
  procedure guardarRtpInfFinanciera(vproceso number,P_TIPO_INF_FINANCIERA varchar2, P_FECHA varchar2,P_VALOR varchar2);
  
+ 
+ procedure guardarMultas(vproceso number,
+  P_INSCRIPCION VARCHAR2, --numeroinscripcionlibro
+  P_NRO_CONTRATO VARCHAR2, --numerocontrato
+  P_ACTO_ADMINISTRATIVO VARCHAR2, --numeroactoadministrativo
+  P_FECHA_ACTO_ADMINISTRATIVO VARCHAR2, --fechaactoadministrativo
+  P_VALOR VARCHAR2,  --valormulta
+  P_VALOR_PAGADO VARCHAR2, --valorpagado
+  P_ESTADO VARCHAR2, --estadomulta
+  P_ACTO_REVOCACION VARCHAR2,--numeroactorevocacion
+  P_FECHA_ACTO_REVOCACION VARCHAR2, --fechaactorevocacion
+  P_FECHA_EJECUTORIA_ACTO_ADMIN VARCHAR2,  --fechaejecutoriaactoadministrativo
+  P_NRO_ACTO_SUSPENSION_TEMP VARCHAR2, --numeroactosuspension
+  P_FECHA_ACTO_SUSPENSION VARCHAR2,  --fechaactosuspension
+  P_NRO_ACTO_CONFIRMA_MULTA VARCHAR2, --numeroactoconfirmacion
+  P_FECHA_ACTO_CONFIRMA_MULTA VARCHAR2, --fechaactoconfirmacion
+  P_CODIGO_CAMARA VARCHAR2, --codigocamara
+  P_FECHA_INSCRIPCION VARCHAR2, --fechainscripcionlibro
+  P_FECHA_RADICACION_RUE VARCHAR2, --fecharadicacion
+  P_NIT_ENTIDAD VARCHAR2, --nitentidad
+  P_NRO_CONTRATO_SECOP VARCHAR2,  --numerocontratosecop
+  P_NOMBRE_ENTIDAD VARCHAR2, --nombreentidad
+  P_MUNICIPIO VARCHAR2,  --munientidad
+  P_AREA VARCHAR2       --divarea
+);
+
+
+
+ procedure guardarSanciones(
+  vproceso number,
+  P_INSCRIPCION VARCHAR2, --numeroinscripcionlibro
+  P_NRO_CONTRATO VARCHAR2,  --numerocontrato
+  P_ACTO_ADMINISTRATIVO VARCHAR2,  --numeroactoadministrativo
+  P_FECHA_ACTO_ADMINISTRATIVO VARCHAR2,  --fechaactoadministrativo
+  P_DESCRIPCION VARCHAR2,  --descripcion
+  P_ESTADO VARCHAR2,  --estadosancion
+  P_CUMPLIMIENTO VARCHAR2,  --condicionincumplimiento
+  P_ACTO_REVOCACION VARCHAR2,   --numeroactorevocacion
+  P_FECHA_ACTO_REVOCACION VARCHAR2,  --fechaactorevocacion
+  P_FECHA_EJECUTORIA_ACTO_ADMIN VARCHAR2,  --fechaejecutoriaactoadministrativo
+  P_NRO_ACTO_SUSPENSION_TEMP VARCHAR2,  --numeroactosuspension
+  P_FECHA_ACTO_SUSPENSION VARCHAR2,   --fechaactosuspension
+  P_NRO_ACTO_CONFIRMA_SANCION VARCHAR2,  --numeroactoconfirmacion
+  P_FECHA_ACTO_CONFIRMA_SANCION VARCHAR2,  --fechaactoconfirmacion
+  P_CODIGO_CAMARA VARCHAR2,  --codigocamara
+  P_FECHA_INSCRIPCION VARCHAR2,   --fechainscripcionlibro
+  P_FECHA_RADICACION_RUE VARCHAR2, --fecharadicacion
+  P_NIT_ENTIDAD VARCHAR2,  --nitentidad
+  P_NRO_CONTRATO_SECOP VARCHAR2,  --numerocontratosecop
+  P_VIGENCIA_SANCION VARCHAR2,  --vigencia
+  P_FUNDAMENTO_LEGAL VARCHAR2,  --fundamentolegal
+  P_INCUMPLIMIENTO_VIVIENDA VARCHAR2,  --relacionadoconstruccion
+  P_NOMBRE_ENTIDAD VARCHAR2,  --nombreentidad
+  P_MUNICIPIO_ENTIDAD VARCHAR2,  --munientidad
+  P_AREA_ENTIDAD VARCHAR2  --divarea
+) ;
+
+
+ procedure guardarSancionesDisciplinarias(
+  vproceso number,
+  P_CONSECUTIVO VARCHAR2,  --consecutivo del registro insertado
+  P_NIT_ENTIDAD VARCHAR2, --nitentidad
+  P_INSCRIPCION VARCHAR2,   --numeroinscripcionlibro
+  P_CODIGO_CAMARA VARCHAR2,   --codigocamara
+  P_FECHA_INSCRIPCION VARCHAR2,   --fechainscripcionlibro
+  P_ACTO_ADMINISTRATIVO VARCHAR2, --numeroactoadministrativo
+  P_FECHA_ACTO_ADMINISTRATIVO VARCHAR2,  --fechaactoadministrativo
+  P_FECHA_ACTO_EJECUTORIA VARCHAR2, --fechaejecutoriaactoadministrativo
+  P_DESCRIPCION VARCHAR2,  --descripcion
+  P_VIGENCIA VARCHAR2,  --vigencia
+  P_FUNDAMENTO_LEGAL VARCHAR2,  --fundamentolegal
+  P_ESTADO VARCHAR2, --estadosancion
+  P_ACTO_SUSPENSION_TEMP VARCHAR2, --numeroactosuspension
+  P_FECHA_ACTO_SUSPENSION VARCHAR2,  --fechaactosuspension
+  P_ACTO_CONFIRMACION VARCHAR2,  --numeroactoconfirmacion
+  P_FECHA_ACTO_CONFIRMACION VARCHAR2,  --fechaactoconfirmacion
+  P_ACTO_REVOCACION VARCHAR2,  --numeroactorevocacion
+  P_FECHA_ACTO_REVOCACION VARCHAR2,  --fechaactorevocacion
+  P_NOMBRE_ENTIDAD VARCHAR2, --nombreentidad
+  P_MUNICIPIO_ENTIDAD VARCHAR2,  --munientidad
+  P_AREA_ENTIDAD  VARCHAR2         --divarea
+);
+
+
+procedure guardarRepreentantes
+(
+ vproceso number,
+ P_SECUENCIA VARCHAR2,
+ P_TIPO_IDENTIFICACION VARCHAR2, --tipoidentificacion
+ P_NRO_IDENTIFICACION VARCHAR2,--identificacion
+ P_PRIMER_NOMBRE  VARCHAR2,--nom1
+ P_SEGUNDO_NOMBRE VARCHAR2, --nom2
+ P_PRIMER_APELLIDO  VARCHAR2,--ape1
+ P_SEGUNDO_APELLIDO  VARCHAR2-- ape2
+
+);
+ 
+ 
+ 
+ procedure guardarSituacionesControl
+(
+  vproceso number,
+  P_SECUENCIA VARCHAR2,
+  P_NOMBRE VARCHAR2,  --nombre
+  P_IDENTIFICACION VARCHAR2, --identificación
+  P_TIPO VARCHAR2, --TIPO
+  ID_DOMICILIO VARCHAR2--domicilio 
+);
+
 END PKG_CD_CAMBIO_DOM;
 /
 
@@ -256,9 +366,9 @@ begin
 	end if;
 	
 	
-		if(vnombreproceso  = 'PRCONTRATOSEE') Then
+	if(vnombreproceso  = 'PRCONTRATOSEE') Then
 			
-			--procedmiento llena la tablas RPT_EXPERIENCIA
+			--procedmiento llena la tablas PRCONTRATOSEE
 			nuReg := 1;
 			
 			
@@ -344,6 +454,215 @@ begin
 			end loop;
 		
 	end if;
+	
+	
+	if(vnombreproceso  = 'PRMULTAS') Then
+			
+			--procedmiento llena la tablas PRMULTAS
+			nuReg := 1;
+			
+			
+			
+			--recorro la itreacion de los registros de una tabla 1 a n registros. 
+			for rgdatos1 in 1 .. registrostabla loop
+				
+
+										
+										
+				guardarMultas(
+								vproceso ,
+								fnGetValorCampoTabla(vproceso,idtabla,'numeroinscripcionlibro',nuReg),
+								fnGetValorCampoTabla(vproceso,idtabla,'numerocontrato',nuReg),
+								fnGetValorCampoTabla(vproceso,idtabla,'numeroactoadministrativo',nuReg),
+								fnGetValorCampoTabla(vproceso,idtabla,'fechaactoadministrativo',nuReg),
+								fnGetValorCampoTabla(vproceso,idtabla,'valormulta',nuReg),		  
+								fnGetValorCampoTabla(vproceso,idtabla,'valorpagado',nuReg),
+								fnGetValorCampoTabla(vproceso,idtabla,'estadomulta',nuReg),  		  
+								fnGetValorCampoTabla(vproceso,idtabla,'numeroactorevocacion',nuReg),
+								fnGetValorCampoTabla(vproceso,idtabla,'fechaactorevocacion',nuReg),
+								fnGetValorCampoTabla(vproceso,idtabla,'fechaejecutoriaactoadministrativo',nuReg),
+								fnGetValorCampoTabla(vproceso,idtabla,'numeroactosuspension',nuReg),
+								fnGetValorCampoTabla(vproceso,idtabla,'fechaactosuspension',nuReg),		  
+								fnGetValorCampoTabla(vproceso,idtabla,'numeroactoconfirmacion',nuReg), 		  
+								fnGetValorCampoTabla(vproceso,idtabla,'fechaactoconfirmacion',nuReg),
+								fnGetValorCampoTabla(vproceso,idtabla,'codigocamara',nuReg),
+								fnGetValorCampoTabla(vproceso,idtabla,'fechainscripcionlibro',nuReg),
+								fnGetValorCampoTabla(vproceso,idtabla,'fecharadicacion',nuReg),		  
+								fnGetValorCampoTabla(vproceso,idtabla,'nitentidad',nuReg),
+								fnGetValorCampoTabla(vproceso,idtabla,'numerocontratosecop',nuReg),
+								fnGetValorCampoTabla(vproceso,idtabla,'nombreentidad',nuReg),
+								fnGetValorCampoTabla(vproceso,idtabla,'munientidad',nuReg),
+								fnGetValorCampoTabla(vproceso,idtabla,'divarea',nuReg)
+							
+						);
+  
+				nuReg := nuReg +1 ;
+			end loop;
+		
+	end if;
+	
+	
+	if(vnombreproceso  = 'PRSANCIONES') Then
+			
+			--procedmiento llena la tablas PRSANCIONES
+			nuReg := 1;
+			
+			
+			
+			--recorro la itreacion de los registros de una tabla 1 a n registros. 
+			for rgdatos1 in 1 .. registrostabla loop
+				
+
+										
+										
+				guardarSanciones(
+								vproceso ,
+								fnGetValorCampoTabla(vproceso,idtabla,'numeroinscripcionlibro',nuReg),
+								fnGetValorCampoTabla(vproceso,idtabla,'numerocontrato',nuReg),
+								fnGetValorCampoTabla(vproceso,idtabla,'numeroactoadministrativo',nuReg),
+								fnGetValorCampoTabla(vproceso,idtabla,'fechaactoadministrativo',nuReg),
+								fnGetValorCampoTabla(vproceso,idtabla,'descripcion',nuReg),
+								fnGetValorCampoTabla(vproceso,idtabla,'estadosancion',nuReg),
+								fnGetValorCampoTabla(vproceso,idtabla,'condicionincumplimiento',nuReg),
+								fnGetValorCampoTabla(vproceso,idtabla,'numeroactorevocacion',nuReg),
+								fnGetValorCampoTabla(vproceso,idtabla,'fechaactorevocacion',nuReg),
+								fnGetValorCampoTabla(vproceso,idtabla,'fechaejecutoriaactoadministrativo',nuReg),
+								fnGetValorCampoTabla(vproceso,idtabla,'numeroactosuspension',nuReg),
+								fnGetValorCampoTabla(vproceso,idtabla,'fechaactosuspension',nuReg),
+								fnGetValorCampoTabla(vproceso,idtabla,'numeroactoconfirmacion',nuReg),
+								fnGetValorCampoTabla(vproceso,idtabla,'fechaactoconfirmacion',nuReg),
+								fnGetValorCampoTabla(vproceso,idtabla,'codigocamara',nuReg),
+								fnGetValorCampoTabla(vproceso,idtabla,'fechainscripcionlibro',nuReg),
+								fnGetValorCampoTabla(vproceso,idtabla,'fecharadicacion',nuReg),
+								fnGetValorCampoTabla(vproceso,idtabla,'nitentidad',nuReg),
+								fnGetValorCampoTabla(vproceso,idtabla,'numerocontratosecop',nuReg),
+								fnGetValorCampoTabla(vproceso,idtabla,'vigencia',nuReg),
+								fnGetValorCampoTabla(vproceso,idtabla,'fundamentolegal',nuReg),
+								fnGetValorCampoTabla(vproceso,idtabla,'relacionadoconstruccion',nuReg),
+								fnGetValorCampoTabla(vproceso,idtabla,'nombreentidad',nuReg),
+								fnGetValorCampoTabla(vproceso,idtabla,'munientidad',nuReg),
+								fnGetValorCampoTabla(vproceso,idtabla,'divarea',nuReg)
+								);
+								
+
+
+
+  
+				nuReg := nuReg +1 ;
+			end loop;
+		
+	end if;
+	
+	
+	
+	if(vnombreproceso  = 'PRSANCIONDISCIPLINARIA') Then
+			
+			--procedmiento llena la tablas PRSANCIONDISCIPLINARIA
+			nuReg := 1;
+			
+			
+			
+			--recorro la itreacion de los registros de una tabla 1 a n registros. 
+			for rgdatos1 in 1 .. registrostabla loop
+				
+
+										
+										
+				guardarSancionesDisciplinarias(
+								vproceso ,
+								nuReg,
+								fnGetValorCampoTabla(vproceso,idtabla,'nitentidad',nuReg),
+								fnGetValorCampoTabla(vproceso,idtabla,'numeroinscripcionlibro',nuReg),
+								fnGetValorCampoTabla(vproceso,idtabla,'codigocamara',nuReg),
+								fnGetValorCampoTabla(vproceso,idtabla,'fechainscripcionlibro',nuReg),
+								fnGetValorCampoTabla(vproceso,idtabla,'numeroactoadministrativo',nuReg),
+								fnGetValorCampoTabla(vproceso,idtabla,'fechaactoadministrativo',nuReg),
+								fnGetValorCampoTabla(vproceso,idtabla,'fechaejecutoriaactoadministrativo',nuReg),
+								fnGetValorCampoTabla(vproceso,idtabla,'descripcion',nuReg),
+								fnGetValorCampoTabla(vproceso,idtabla,'vigencia',nuReg),
+								fnGetValorCampoTabla(vproceso,idtabla,'fundamentolegal',nuReg),
+								fnGetValorCampoTabla(vproceso,idtabla,'estadosancion',nuReg),
+								fnGetValorCampoTabla(vproceso,idtabla,'numeroactosuspension',nuReg),
+								fnGetValorCampoTabla(vproceso,idtabla,'fechaactosuspension',nuReg),
+								fnGetValorCampoTabla(vproceso,idtabla,'numeroactoconfirmacion',nuReg),
+								fnGetValorCampoTabla(vproceso,idtabla,'fechaactoconfirmacion',nuReg),
+								fnGetValorCampoTabla(vproceso,idtabla,'numeroactorevocacion',nuReg),
+								fnGetValorCampoTabla(vproceso,idtabla,'fechaactorevocacion',nuReg),
+								fnGetValorCampoTabla(vproceso,idtabla,'nombreentidad',nuReg),
+								fnGetValorCampoTabla(vproceso,idtabla,'munientidad',nuReg),
+								fnGetValorCampoTabla(vproceso,idtabla,'divarea',nuReg)
+								
+						);
+								
+
+
+
+  
+				nuReg := nuReg +1 ;
+			end loop;
+		
+	end if;
+	
+	
+	
+	if(vnombreproceso  = 'PRREPRESENNTANTES') Then
+			
+			--procedmiento llena la tablas PRREPRESENNTANTES
+			nuReg := 1;
+			
+			
+			
+			--recorro la itreacion de los registros de una tabla 1 a n registros. 
+			for rgdatos1 in 1 .. registrostabla loop
+				
+
+ 
+				guardarRepreentantes(
+								vproceso ,
+								nuReg,
+								fnGetValorCampoTabla(vproceso,idtabla,'tipoidentificacion',nuReg),
+								fnGetValorCampoTabla(vproceso,idtabla,'identificacion',nuReg),
+								fnGetValorCampoTabla(vproceso,idtabla,'nom1',nuReg),
+								fnGetValorCampoTabla(vproceso,idtabla,'nom2',nuReg),
+								fnGetValorCampoTabla(vproceso,idtabla,'ape1',nuReg),
+								fnGetValorCampoTabla(vproceso,idtabla,'ape2',nuReg)
+						);
+								
+
+
+
+  
+				nuReg := nuReg +1 ;
+			end loop;
+		
+	end if;
+	
+	
+	if(vnombreproceso  = 'PRSITUACIONESCONTROL') Then
+			
+			--procedmiento llena la tablas PRSITUACIONESCONTROL
+			nuReg := 1;
+			
+			
+			
+			--recorro la itreacion de los registros de una tabla 1 a n registros. 
+			for rgdatos1 in 1 .. registrostabla loop
+				
+
+						guardarSituacionesControl(
+								  vproceso,
+								  nuReg,
+								  fnGetValorCampoTabla(vproceso,idtabla,'nombre',nuReg),
+								  fnGetValorCampoTabla(vproceso,idtabla,'identificacion',nuReg),
+								  fnGetValorCampoTabla(vproceso,idtabla,'tipo',nuReg),
+								  fnGetValorCampoTabla(vproceso,idtabla,'domicilio',nuReg)
+								  );
+				nuReg := nuReg +1 ;
+			end loop;
+		
+	end if;
+	
+	
 
 end llenarDatosProcedimiento;
 
@@ -909,6 +1228,465 @@ begin
 		);
 	end if;
 end guardarRtpInfFinanciera;
+
+
+
+
+/* *************************************************************
+  Descripcion : Procedimiento guardar la información de los multas
+ * **********************************************************/
+procedure guardarMultas(vproceso number,
+  P_INSCRIPCION VARCHAR2, --numeroinscripcionlibro
+  P_NRO_CONTRATO VARCHAR2, --numerocontrato
+  P_ACTO_ADMINISTRATIVO VARCHAR2, --numeroactoadministrativo
+  P_FECHA_ACTO_ADMINISTRATIVO VARCHAR2, --fechaactoadministrativo
+  P_VALOR VARCHAR2,  --valormulta
+  P_VALOR_PAGADO VARCHAR2, --valorpagado
+  P_ESTADO VARCHAR2, --estadomulta
+  P_ACTO_REVOCACION VARCHAR2,--numeroactorevocacion
+  P_FECHA_ACTO_REVOCACION VARCHAR2, --fechaactorevocacion
+  P_FECHA_EJECUTORIA_ACTO_ADMIN VARCHAR2,  --fechaejecutoriaactoadministrativo
+  P_NRO_ACTO_SUSPENSION_TEMP VARCHAR2, --numeroactosuspension
+  P_FECHA_ACTO_SUSPENSION VARCHAR2,  --fechaactosuspension
+  P_NRO_ACTO_CONFIRMA_MULTA VARCHAR2, --numeroactoconfirmacion
+  P_FECHA_ACTO_CONFIRMA_MULTA VARCHAR2, --fechaactoconfirmacion
+  P_CODIGO_CAMARA VARCHAR2, --codigocamara
+  P_FECHA_INSCRIPCION VARCHAR2, --fechainscripcionlibro
+  P_FECHA_RADICACION_RUE VARCHAR2, --fecharadicacion
+  P_NIT_ENTIDAD VARCHAR2, --nitentidad
+  P_NRO_CONTRATO_SECOP VARCHAR2,  --numerocontratosecop
+  P_NOMBRE_ENTIDAD VARCHAR2, --nombreentidad
+  P_MUNICIPIO VARCHAR2,  --munientidad
+  P_AREA VARCHAR2       --divarea
+) as
+
+P_REGISTRO number;
+  BEGIN
+   -- Se consulta el número de registro asociado al proponente que se carga
+SELECT nro_proponente into P_REGISTRO FROM CD_JSON_CARGUE WHERE ID = vproceso;
+ 
+  INSERT INTO RPT_MULTA
+  (
+    CONSECUTIVO_REPORTE,
+    REGISTRO,
+    INSCRIPCION,
+    NRO_CONTRATO,
+    NIT_PROPONENTE,
+    ACTO_ADMINISTRATIVO,
+    FECHA_ACTO_ADMINISTRATIVO,
+    VALOR,
+    VALOR_PAGADO,
+    ESTADO,
+    ACTO_REVOCACION,
+    FECHA_ACTO_REVOCACION,
+    INDICADOR_ENVIO,
+    TIPO_IDENTIFICACION,
+    FECHA_EJECUTORIA_ACTO_ADMIN,
+    NRO_ACTO_SUSPENSION_TEMP,
+    FECHA_ACTO_SUSPENSION,
+    NRO_ACTO_CONFIRMA_MULTA,
+    FECHA_ACTO_CONFIRMA_MULTA,
+    OBSERVACIONES,
+    CODIGO_CAMARA,
+    CODIGO_LIBRO_REGISTRADO,
+    FECHA_INSCRIPCION,
+    FECHA_RADICACION_RUE,
+    NRO_RADICACION_RUE,
+    SW_DECRETO734,
+    NIT_ENTIDAD,
+    SW_RUES,
+    NRO_CONTRATO_SECOP,
+    IMAGEN_ACTO,
+    NRO_ACTO_EJECUTORIA,
+    NOMBRE_ENTIDAD,
+    MUNICIPIO_ENTIDAD,
+    AREA_ENTIDAD
+  )
+  VALUES
+  (
+    0,
+    P_REGISTRO,
+    P_INSCRIPCION, --numeroinscripcionlibro
+    P_NRO_CONTRATO, --numerocontrato
+    NULL,
+    P_ACTO_ADMINISTRATIVO, --numeroactoadministrativo
+    TO_DATE(P_FECHA_ACTO_ADMINISTRATIVO,'YYYYMMDD'), --fechaactoadministrativo
+    P_VALOR,  --valormulta
+    P_VALOR_PAGADO, --valorpagado
+    P_ESTADO, --estadomulta
+    P_ACTO_REVOCACION,--numeroactorevocacion
+    TO_DATE(P_FECHA_ACTO_REVOCACION,'YYYYMMDD'), --fechaactorevocacion
+    NULL,
+    NULL,
+    TO_DATE(P_FECHA_EJECUTORIA_ACTO_ADMIN,'YYYYMMDD'),  --fechaejecutoriaactoadministrativo
+    P_NRO_ACTO_SUSPENSION_TEMP, --numeroactosuspension
+    TO_DATE(P_FECHA_ACTO_SUSPENSION,'YYYYMMDD'),  --fechaactosuspension
+    P_NRO_ACTO_CONFIRMA_MULTA, --numeroactoconfirmacion
+    TO_DATE(P_FECHA_ACTO_CONFIRMA_MULTA,'YYYYMMDD'), --fechaactoconfirmacion
+    NULL,
+    P_CODIGO_CAMARA, --codigocamara
+    NULL,
+    TO_DATE(P_FECHA_INSCRIPCION,'YYYYMMDD'), --fechainscripcionlibro
+    TO_DATE(P_FECHA_RADICACION_RUE,'YYYYMMDD'), --fecharadicacion
+    NULL,
+    NULL,
+    P_NIT_ENTIDAD, --nitentidad
+    1,
+    P_NRO_CONTRATO_SECOP,  --numerocontratosecop
+    NULL,
+    NULL,
+    P_NOMBRE_ENTIDAD, --nombreentidad
+    P_MUNICIPIO,  --munientidad
+    P_AREA        --divarea
+  );
+ 
+END guardarMultas;
+
+
+--************************++SANCIONES
+/* *************************************************************
+  Descripcion : Procedimiento guardar la información de los sanciones
+ * **********************************************************/
+procedure guardarSanciones(
+  vproceso number,
+  P_INSCRIPCION VARCHAR2, --numeroinscripcionlibro
+  P_NRO_CONTRATO VARCHAR2,  --numerocontrato
+  P_ACTO_ADMINISTRATIVO VARCHAR2,  --numeroactoadministrativo
+  P_FECHA_ACTO_ADMINISTRATIVO VARCHAR2,  --fechaactoadministrativo
+  P_DESCRIPCION VARCHAR2,  --descripcion
+  P_ESTADO VARCHAR2,  --estadosancion
+  P_CUMPLIMIENTO VARCHAR2,  --condicionincumplimiento
+  P_ACTO_REVOCACION VARCHAR2,   --numeroactorevocacion
+  P_FECHA_ACTO_REVOCACION VARCHAR2,  --fechaactorevocacion
+  P_FECHA_EJECUTORIA_ACTO_ADMIN VARCHAR2,  --fechaejecutoriaactoadministrativo
+  P_NRO_ACTO_SUSPENSION_TEMP VARCHAR2,  --numeroactosuspension
+  P_FECHA_ACTO_SUSPENSION VARCHAR2,   --fechaactosuspension
+  P_NRO_ACTO_CONFIRMA_SANCION VARCHAR2,  --numeroactoconfirmacion
+  P_FECHA_ACTO_CONFIRMA_SANCION VARCHAR2,  --fechaactoconfirmacion
+  P_CODIGO_CAMARA VARCHAR2,  --codigocamara
+  P_FECHA_INSCRIPCION VARCHAR2,   --fechainscripcionlibro
+  P_FECHA_RADICACION_RUE VARCHAR2, --fecharadicacion
+  P_NIT_ENTIDAD VARCHAR2,  --nitentidad
+  P_NRO_CONTRATO_SECOP VARCHAR2,  --numerocontratosecop
+  P_VIGENCIA_SANCION VARCHAR2,  --vigencia
+  P_FUNDAMENTO_LEGAL VARCHAR2,  --fundamentolegal
+  P_INCUMPLIMIENTO_VIVIENDA VARCHAR2,  --relacionadoconstruccion
+  P_NOMBRE_ENTIDAD VARCHAR2,  --nombreentidad
+  P_MUNICIPIO_ENTIDAD VARCHAR2,  --munientidad
+  P_AREA_ENTIDAD VARCHAR2  --divarea
+) as
+
+P_REGISTRO number;
+  BEGIN
+   -- Se consulta el número de registro asociado al proponente que se carga
+SELECT nro_proponente into P_REGISTRO FROM CD_JSON_CARGUE WHERE ID = vproceso;
+ 
+  INSERT INTO RPT_SANCION
+(
+  CONSECUTIVO_REPORTE,
+  REGISTRO,
+  INSCRIPCION,
+  NRO_CONTRATO,
+  NIT_PROPONENTE,
+  ACTO_ADMINISTRATIVO,
+  FECHA_ACTO_ADMINISTRATIVO,
+  DESCRIPCION,
+  ESTADO,
+  CUMPLIMIENTO,
+  ACTO_REVOCACION,
+  FECHA_ACTO_REVOCACION,
+  INDICADOR_ENVIO,
+  TIPO_IDENTIFICACION,
+  FECHA_EJECUTORIA_ACTO_ADMIN,
+  NRO_ACTO_SUSPENSION_TEMP,
+  FECHA_ACTO_SUSPENSION,
+  NRO_ACTO_CONFIRMA_SANCION,
+  FECHA_ACTO_CONFIRMA_SANCION,
+  OBSERVACIONES,
+  CODIGO_CAMARA,
+  CODIGO_LIBRO_REGISTRADO,
+  FECHA_INSCRIPCION,
+  FECHA_RADICACION_RUE,
+  NRO_RADICACION_RUE,
+  SW_DECRETO734,
+  NIT_ENTIDAD,
+  SW_RUES,
+  NRO_CONTRATO_SECOP,
+  IMAGEN_ACTO,
+  NRO_ACTO_EJECUTORIA,
+  VIGENCIA_SANCION,
+  FUNDAMENTO_LEGAL,
+  CONTRATO_RELACIONADO,
+  INCUMPLIMIENTO_VIVIENDA,
+  NOMBRE_ENTIDAD,
+  MUNICIPIO_ENTIDAD,
+  AREA_ENTIDAD
+)
+VALUES
+(
+  0,
+  P_REGISTRO,
+  P_INSCRIPCION, --numeroinscripcionlibro
+  P_NRO_CONTRATO,  --numerocontrato
+  NULL,
+  P_ACTO_ADMINISTRATIVO,  --numeroactoadministrativo
+  TO_DATE(P_FECHA_ACTO_ADMINISTRATIVO,'YYYYMMDD'),  --fechaactoadministrativo
+  P_DESCRIPCION,  --descripcion
+  P_ESTADO,  --estadosancion
+  DECODE(P_CUMPLIMIENTO,'S',0),  --condicionincumplimiento
+  P_ACTO_REVOCACION,   --numeroactorevocacion
+  TO_DATE(P_FECHA_ACTO_REVOCACION,'YYYYMMDD'),  --fechaactorevocacion
+  1,
+  NULL,
+  TO_DATE(P_FECHA_EJECUTORIA_ACTO_ADMIN,'YYYYMMDD'),  --fechaejecutoriaactoadministrativo
+  P_NRO_ACTO_SUSPENSION_TEMP,  --numeroactosuspension
+  TO_DATE(P_FECHA_ACTO_SUSPENSION,'YYYYMMDD'),   --fechaactosuspension
+  P_NRO_ACTO_CONFIRMA_SANCION,  --numeroactoconfirmacion
+  TO_DATE(P_FECHA_ACTO_CONFIRMA_SANCION,'YYYYMMDD'),  --fechaactoconfirmacion
+  NULL,
+  P_CODIGO_CAMARA,  --codigocamara
+  NULL,
+  TO_DATE(P_FECHA_INSCRIPCION,'YYYYMMDD'),   --fechainscripcionlibro
+  TO_DATE(P_FECHA_RADICACION_RUE,'YYYYMMDD'), --fecharadicacion
+  NULL,
+  NULL,
+  P_NIT_ENTIDAD,  --nitentidad
+  1,
+  P_NRO_CONTRATO_SECOP,  --numerocontratosecop
+  NULL,
+  NULL,
+  TO_DATE(P_VIGENCIA_SANCION,'YYYYMMDD'),  --vigencia
+  from_base64(P_FUNDAMENTO_LEGAL),  --fundamentolegal
+  NULL,
+  DECODE(P_INCUMPLIMIENTO_VIVIENDA,'S',1,0),  --relacionadoconstruccion
+  P_NOMBRE_ENTIDAD,  --nombreentidad
+  P_MUNICIPIO_ENTIDAD,  --munientidad
+  P_AREA_ENTIDAD  --divarea
+);
+ 
+END guardarSanciones;
+
+
+--************************++SANCIONES DISCIPLINARIAS
+/* *************************************************************
+  Descripcion : Procedimiento guardar la información de los sanciones disciplinarias
+ * **********************************************************/
+procedure guardarSancionesDisciplinarias(
+  vproceso number,
+  P_CONSECUTIVO VARCHAR2,  --consecutivo del registro insertado
+  P_NIT_ENTIDAD VARCHAR2, --nitentidad
+  P_INSCRIPCION VARCHAR2,   --numeroinscripcionlibro
+  P_CODIGO_CAMARA VARCHAR2,   --codigocamara
+  P_FECHA_INSCRIPCION VARCHAR2,   --fechainscripcionlibro
+  P_ACTO_ADMINISTRATIVO VARCHAR2, --numeroactoadministrativo
+  P_FECHA_ACTO_ADMINISTRATIVO VARCHAR2,  --fechaactoadministrativo
+  P_FECHA_ACTO_EJECUTORIA VARCHAR2, --fechaejecutoriaactoadministrativo
+  P_DESCRIPCION VARCHAR2,  --descripcion
+  P_VIGENCIA VARCHAR2,  --vigencia
+  P_FUNDAMENTO_LEGAL VARCHAR2,  --fundamentolegal
+  P_ESTADO VARCHAR2, --estadosancion
+  P_ACTO_SUSPENSION_TEMP VARCHAR2, --numeroactosuspension
+  P_FECHA_ACTO_SUSPENSION VARCHAR2,  --fechaactosuspension
+  P_ACTO_CONFIRMACION VARCHAR2,  --numeroactoconfirmacion
+  P_FECHA_ACTO_CONFIRMACION VARCHAR2,  --fechaactoconfirmacion
+  P_ACTO_REVOCACION VARCHAR2,  --numeroactorevocacion
+  P_FECHA_ACTO_REVOCACION VARCHAR2,  --fechaactorevocacion
+  P_NOMBRE_ENTIDAD VARCHAR2, --nombreentidad
+  P_MUNICIPIO_ENTIDAD VARCHAR2,  --munientidad
+  P_AREA_ENTIDAD  VARCHAR2         --divarea
+) as
+
+P_REGISTRO number;
+  BEGIN
+   -- Se consulta el número de registro asociado al proponente que se carga
+SELECT nro_proponente into P_REGISTRO FROM CD_JSON_CARGUE WHERE ID = vproceso;
+ 
+ 
+  INSERT INTO RPT_SANCION_DISCIPLINARIA
+  (
+    CONSECUTIVO_REPORTE,
+    REGISTRO,
+    CONSECUTIVO,
+    NIT_ENTIDAD,
+    INSCRIPCION,
+    CODIGO_CAMARA,
+    CODIGO_LIBRO_REGISTRADO,
+    FECHA_INSCRIPCION,
+    TIPO_IDENTIFICACION,
+    NIT_PROPONENTE,
+    NOMBRE_PROPONENTE,
+    ACTO_ADMINISTRATIVO,
+    FECHA_ACTO_ADMINISTRATIVO,
+    ACTO_EJECUTORIA,
+    FECHA_ACTO_EJECUTORIA,
+    DESCRIPCION,
+    VIGENCIA,
+    FUNDAMENTO_LEGAL,
+    ESTADO,
+    ACTO_SUSPENSION_TEMP,
+    FECHA_ACTO_SUSPENSION,
+    ACTO_CONFIRMACION,
+    FECHA_ACTO_CONFIRMACION,
+    ACTO_REVOCACION,
+    FECHA_ACTO_REVOCACION,
+    INDICADOR_ENVIO,
+    OBSERVACIONES,
+    IMAGEN_ACTO,
+    NOMBRE_ENTIDAD,
+    MUNICIPIO_ENTIDAD,
+    AREA_ENTIDAD
+   
+  )
+  VALUES
+  (
+    0,
+    P_REGISTRO,
+    P_CONSECUTIVO,  --consecutivo del registro insertado
+    P_NIT_ENTIDAD, --nitentidad
+    P_INSCRIPCION,   --numeroinscripcionlibro
+    P_CODIGO_CAMARA,   --codigocamara
+    NULL,
+    TO_DATE(P_FECHA_INSCRIPCION,'YYYYMMDD'),   --fechainscripcionlibro
+    NULL,
+    NULL,
+    NULL,
+    P_ACTO_ADMINISTRATIVO, --numeroactoadministrativo
+    TO_DATE(P_FECHA_ACTO_ADMINISTRATIVO,'YYYYMMDD'),  --fechaactoadministrativo
+    NULL,
+    TO_DATE(P_FECHA_ACTO_EJECUTORIA,'YYYYMMDD'), --fechaejecutoriaactoadministrativo
+    P_DESCRIPCION,  --descripcion
+    TO_DATE(P_VIGENCIA,'YYYYMMDD'),  --vigencia
+    from_base64(P_FUNDAMENTO_LEGAL),  --fundamentolegal
+    P_ESTADO, --estadosancion
+    P_ACTO_SUSPENSION_TEMP, --numeroactosuspension
+    TO_DATE(P_FECHA_ACTO_SUSPENSION,'YYYYMMDD'),  --fechaactosuspension
+    P_ACTO_CONFIRMACION,  --numeroactoconfirmacion
+    TO_DATE(P_FECHA_ACTO_CONFIRMACION,'YYYYMMDD'),  --fechaactoconfirmacion
+    P_ACTO_REVOCACION,  --numeroactorevocacion
+    TO_DATE(P_FECHA_ACTO_REVOCACION,'YYYYMMDD'),  --fechaactorevocacion
+    1,
+    NULL,
+    NULL,
+    P_NOMBRE_ENTIDAD, --nombreentidad
+    P_MUNICIPIO_ENTIDAD,  --munientidad
+    P_AREA_ENTIDAD          --divarea
+  );
+ 
+END guardarSancionesDisciplinarias;
+
+
+--**********************REPRESENTANTES LEGALES
+
+/* *************************************************************
+  Descripcion : Procedimiento guardar la información de los representantes legales
+ * **********************************************************/
+procedure guardarRepreentantes
+(
+ vproceso number,
+ P_SECUENCIA VARCHAR2,
+ P_TIPO_IDENTIFICACION VARCHAR2, --tipoidentificacion
+ P_NRO_IDENTIFICACION VARCHAR2,--identificacion
+ P_PRIMER_NOMBRE  VARCHAR2,--nom1
+ P_SEGUNDO_NOMBRE VARCHAR2, --nom2
+ P_PRIMER_APELLIDO  VARCHAR2,--ape1
+ P_SEGUNDO_APELLIDO  VARCHAR2-- ape2
+
+) as
+
+P_REGISTRO number;
+  BEGIN
+   -- Se consulta el número de registro asociado al proponente que se carga
+	SELECT nro_proponente into P_REGISTRO FROM CD_JSON_CARGUE WHERE ID = vproceso;
+ 
+ 
+ 
+INSERT INTO RPT_REPRESENTANTE
+(
+ REGISTRO,
+ NRO_REPRESENTANTE,
+ TIPO_IDENTIFICACION,
+ NRO_IDENTIFICACION,
+ PAIS,
+ NOMBRE_REPRESENTANTE
+)
+VALUES
+(
+ P_REGISTRO,
+ P_SECUENCIA,
+ (SELECT ti.CODIGO_LOCAL FROM BAS_CLASES_IDENTIFICACION ti WHERE ti.CODIGO_RUE=P_TIPO_IDENTIFICACION AND ROWNUM=1), --tipoidentificacion
+ P_NRO_IDENTIFICACION,--identificacion
+ 169,
+ (P_PRIMER_NOMBRE||' '||P_SEGUNDO_NOMBRE||' '||P_PRIMER_APELLIDO ||' '|| P_SEGUNDO_APELLIDO) --ape1 ape2 nom1 nom2
+
+);
+
+ 
+END guardarRepreentantes;
+
+
+--**********************SITUACIONES DE CONTROL
+
+/* *************************************************************
+  Descripcion : Procedimiento guardar la información de las situaciones de control
+ * **********************************************************/
+procedure guardarSituacionesControl
+(
+  vproceso number,
+  P_SECUENCIA VARCHAR2,
+  P_NOMBRE VARCHAR2,  --nombre
+  P_IDENTIFICACION VARCHAR2, --identificación
+  P_TIPO VARCHAR2, --TIPO
+  ID_DOMICILIO VARCHAR2--domicilio 
+) as
+
+
+
+cursor cuDatos  is select NOMBRE_CIUDAD from ciudades  where ciudad = ID_DOMICILIO;
+
+
+	P_REGISTRO number;
+	sbCiudad 	varchar2(50) := '';
+
+  BEGIN
+  
+  OPEN cuDatos;
+  FETCH cuDatos into sbCiudad;
+  close cuDatos;
+   
+  
+   -- Se consulta el número de registro asociado al proponente que se carga
+SELECT nro_proponente into P_REGISTRO FROM CD_JSON_CARGUE WHERE ID = vproceso;
+ 
+ 
+ 
+ 
+ 
+ 
+INSERT INTO RPT_SITUACIONES_CONTROL
+(
+  REGISTRO,
+  SECUENCIA,
+  GRUPO,
+  NOMBRE,
+  IDENTIFICACION,
+  DOMICILIO,
+  ID_SITUACION_ROL,
+  ID_DOMICILIO
+)
+VALUES
+(
+  P_REGISTRO,
+  P_SECUENCIA,
+  1,
+  P_NOMBRE,
+  P_IDENTIFICACION, --identificación
+  sbCiudad, --domicilio
+  (TO_NUMBER(P_TIPO)+1), --TIPO
+  ID_DOMICILIO --domicilio
+);
+
+ 
+END guardarSituacionesControl;
 
 END PKG_CD_CAMBIO_DOM;
 /
