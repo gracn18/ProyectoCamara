@@ -28,7 +28,7 @@ DECLARE
   CLOBJSONGEN CLOB;
 BEGIN
   JSONID := 1;
-  DATOS := ' and i.matricula = 45020 and i.camara = 5 ';
+  DATOS := ' and i.matricula = 1296 and i.camara = 5 ';
 
   PKG_CD_JSON.GENERARJSON(
     JSONID => JSONID,
