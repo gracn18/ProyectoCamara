@@ -1,7 +1,7 @@
 CREATE OR REPLACE PACKAGE PKG_CD_CAMBIO_DOM AS 
 /* ******************************************************************************************************************
     Definicion : paquete logica de cambio de domicilio a partir de datos cargados en la tabla cd_tabla_datos_json
-    Autor : Manuel Palomares Vision Ingenieria
+    Autor : Graciela Nunes :D  Vision Ingenieria
 	Fecha : 15/11/2020
 *********************************************************************************************************************/
 
@@ -161,6 +161,99 @@ procedure guardarRepreentantes
   ID_DOMICILIO VARCHAR2--domicilio 
 );
 
+
+
+
+PROCEDURE prc_guardarInfFinanciera(
+     v_proceso NUMBER,
+     P_anodatos varchar2,
+     P_tipo varchar2,
+     P_valor varchar2);
+	 
+	 
+
+procedure prc_guardarVinculos
+(
+     v_proceso NUMBER,
+     P_tipovinculo varchar2,
+     P_idtipoidentificacion varchar2,
+     P_identificacion varchar2,
+     P_nombre_razon_social varchar2,
+     P_ape1 varchar2,
+     P_ape2 varchar2,
+     P_nom1 varchar2,
+     P_nom2 varchar2,
+     P_fechanacimiento varchar2,
+     P_fechaexpdoc varchar2,
+     P_cargo varchar2,
+     P_renglon varchar2,
+     P_nitrepresenta varchar2,
+     P_libroregistro varchar2,
+     P_numeroregistro varchar2,
+     P_dupliregistro varchar2,
+     P_fecharegistro varchar2,
+     P_numerocuotas varchar2,
+     P_valorcuotas varchar2,
+     P_apolab varchar2,
+     P_apolabadi varchar2,
+     P_apoact varchar2,
+     P_apodin varchar2
+     );
+	 
+	
+procedure prc_guardarLibrosComerciales(
+     v_proceso NUMBER,
+	 p_liquidacion number,
+	 p_secuencia number,
+     P_libroregistro varchar2,
+     P_numeroregistro varchar2,
+     P_fecharegistro varchar2,
+     P_codigolibro varchar2,
+     P_paginainicial varchar2,
+     P_totalpaginas varchar2 );
+	 
+	 
+
+procedure PR_GRABARINSCRITOS(
+	 v_proceso NUMBER,
+     P_sigla varchar2,
+     P_idtipoidentificacion varchar2,
+     P_identificacion varchar2,
+     P_idmunidoc varchar2,
+     P_fechaexpdoc varchar2,
+     P_nit varchar2,
+     P_nacionalidad varchar2,
+     P_genero varchar2,
+     P_Indicadorempresabic varchar2,
+     P_numidetribpaisorigen varchar2,
+     P_numidetribextranjeroep varchar2,
+     P_fechamatricula varchar2,
+     P_fecharenovacion varchar2,
+     P_fechavigencia varchar2,
+     P_fechacancelacion varchar2,
+     P_estadomatricula varchar2,
+     P_organizacion varchar2,
+     P_cantmujcdirect varchar2,
+     P_cantidadmujeresempleadas varchar2,
+     P_ctrbeneficioarticulo4 varchar2,
+     P_ctrcumplerequisitosley1780 varchar2,
+     P_ctrrenunciabeneficiosley1780 varchar2,
+	 
+	 
+         
+     P_ctraportante varchar2,
+     P_ctrtipoaportante varchar2,
+	 
+     P_tamanoempresa varchar2,
+     P_emprendedor28 varchar2,
+     P_pemprendedor28 varchar2,
+     P_empresafamiliar varchar2,
+     P_procesosinnovacion varchar2,
+     P_ctrubicacion varchar2,
+     P_ctrafiliacion varchar2 );
+	 
+	 
+	 
 END PKG_CD_CAMBIO_DOM;
 /
 
@@ -238,6 +331,8 @@ function fnGetValorCampoTabla(proceso number,idTabla number,campoTabla varchar2,
   
 
   sbValor varchar2(32000) := '';
+  
+  
  begin
    for rgTablas in cutablas loop
 	
@@ -254,21 +349,18 @@ procedure llenarDatosProcedimiento(vproceso number,vnombreproceso varchar2,idtab
 	nuReg NUMBER(15);
 	sbFEcha varchar2(20) := '';
 	
-	
-	
 	cursor curNroProponente is 
 	SELECT a.nro_proponente,b.matricula,b.tipo_juridico FROM CD_JSON_CARGUE a, RPT_PROPONENTE  b
 	WHERE a.id = vproceso and   b.registro = a.nro_proponente;
 	
-    
 	rgDatosMatricula curNroProponente%rowtype;
-	
 	sbGrabar boolean := true;
+	v_agno varchar2(50);
+	nliq number(15); 
 	
-
 begin
 
-	if(vnombreproceso = 'PRCPROPONENTE') Then
+	if(vnombreproceso =  'PRCPROPONENTE') Then
 		 
 			open curNroProponente;
 			fetch curNroProponente into rgDatosMatricula;
@@ -393,7 +485,6 @@ begin
 		
 	end if;
 	
-	
 	if(vnombreproceso  = 'PRCONTRATOSEE') Then
 			
 			--procedmiento llena la tablas PRCONTRATOSEE
@@ -439,7 +530,6 @@ begin
 			end loop;
 		
 	end if;
-
 
 	if(vnombreproceso  = 'PRINFOFINANCIERA') Then
 			
@@ -497,7 +587,6 @@ begin
 			end if;
 	end if;
 	
-	
 	if(vnombreproceso  = 'PRMULTAS') Then
 			
 			--procedmiento llena la tablas PRMULTAS
@@ -542,7 +631,6 @@ begin
 			end loop;
 		
 	end if;
-	
 	
 	if(vnombreproceso  = 'PRSANCIONES') Then
 			
@@ -595,8 +683,6 @@ begin
 		
 	end if;
 	
-	
-	
 	if(vnombreproceso  = 'PRSANCIONDISCIPLINARIA') Then
 			
 			--procedmiento llena la tablas PRSANCIONDISCIPLINARIA
@@ -645,8 +731,6 @@ begin
 		
 	end if;
 	
-	
-	
 	if(vnombreproceso  = 'PRREPRESENNTANTES') Then
 			
 			--procedmiento llena la tablas PRREPRESENNTANTES
@@ -689,7 +773,6 @@ begin
 		
 	end if;
 	
-	
 	if(vnombreproceso  = 'PRSITUACIONESCONTROL') Then
 			
 			--procedmiento llena la tablas PRSITUACIONESCONTROL
@@ -714,6 +797,210 @@ begin
 		
 	end if;
 	
+	if(vnombreproceso  = 'PRRMPRINCIPAL') Then
+			
+			--procedmiento llena la tablas PRSITUACIONESCONTROL
+			nuReg := 1;
+			
+			
+			
+			--recorro la itreacion de los registros de una tabla 1 a n registros. 
+			for rgdatos1 in 1 .. registrostabla loop
+				
+
+					PR_GRABARINSCRITOS(
+								vproceso,
+								fnGetValorCampoTabla(vproceso,idtabla,'sigla',nuReg),
+								fnGetValorCampoTabla(vproceso,idtabla,'idtipoidentificacion',nuReg),
+								fnGetValorCampoTabla(vproceso,idtabla,'identificacion',nuReg),
+								fnGetValorCampoTabla(vproceso,idtabla,'idmunidoc',nuReg),
+								fnGetValorCampoTabla(vproceso,idtabla,'fechaexpdoc',nuReg),
+								fnGetValorCampoTabla(vproceso,idtabla,'nit',nuReg),
+								fnGetValorCampoTabla(vproceso,idtabla,'nacionalidad',nuReg),
+								fnGetValorCampoTabla(vproceso,idtabla,'genero',nuReg),
+								fnGetValorCampoTabla(vproceso,idtabla,'Indicadorempresabic',nuReg),
+								fnGetValorCampoTabla(vproceso,idtabla,'numidetribpaisorigen',nuReg),
+								fnGetValorCampoTabla(vproceso,idtabla,'numidetribextranjeroep',nuReg),
+								fnGetValorCampoTabla(vproceso,idtabla,'fechamatricula',nuReg),
+								fnGetValorCampoTabla(vproceso,idtabla,'fecharenovacion',nuReg),
+								fnGetValorCampoTabla(vproceso,idtabla,'fechavigencia',nuReg),
+								fnGetValorCampoTabla(vproceso,idtabla,'fechacancelacion',nuReg),
+								fnGetValorCampoTabla(vproceso,idtabla,'estadomatricula',nuReg),
+								fnGetValorCampoTabla(vproceso,idtabla,'organizacion',nuReg),
+								fnGetValorCampoTabla(vproceso,idtabla,'cantidadmujerescargosdirectivos',nuReg),
+								fnGetValorCampoTabla(vproceso,idtabla,'cantidadmujeresempleadas',nuReg),
+								fnGetValorCampoTabla(vproceso,idtabla,'ctrbeneficioarticulo4',nuReg),
+								fnGetValorCampoTabla(vproceso,idtabla,'ctrcumplerequisitosley1780',nuReg),
+								fnGetValorCampoTabla(vproceso,idtabla,'ctrrenunciabeneficiosley1780',nuReg),
+								fnGetValorCampoTabla(vproceso,idtabla,'ctraportante',nuReg),
+								fnGetValorCampoTabla(vproceso,idtabla,'ctrtipoaportante',nuReg),
+								fnGetValorCampoTabla(vproceso,idtabla,'tamanoempresa',nuReg),
+								fnGetValorCampoTabla(vproceso,idtabla,'emprendedor28',nuReg),
+								fnGetValorCampoTabla(vproceso,idtabla,'pemprendedor28',nuReg),
+								fnGetValorCampoTabla(vproceso,idtabla,'empresafamiliar',nuReg),
+								fnGetValorCampoTabla(vproceso,idtabla,'procesosinnovacion',nuReg),
+								fnGetValorCampoTabla(vproceso,idtabla,'ctrubicacion',nuReg),
+								fnGetValorCampoTabla(vproceso,idtabla,'ctrafiliacion',nuReg)
+					);
+						
+						
+				nuReg := nuReg +1 ;
+			end loop;
+		
+	end if;
+	
+	if(vnombreproceso  = 'PRRMINFOFINANCIERA') Then
+			
+			--procedmiento llena la tablas PRRMINFOFINANCIERA
+			nuReg := 1;
+			
+			
+			
+			--recorro la itreacion de los registros de una tabla 1 a n registros. 
+			for rgdatos1 in 1 .. registrostabla loop
+				
+				
+					  v_agno := fnGetValorCampoTabla(vproceso,idtabla,'anodatos',nuReg) ;
+					  --prc_guardarInfFinanciera(vproceso,v_agno,0,fnGetValorCampoTabla(vproceso,idtabla,'actvin',nuReg));
+					  prc_guardarInfFinanciera(vproceso,v_agno,0,fnGetValorCampoTabla(vproceso,idtabla,'actcte',nuReg));
+					  prc_guardarInfFinanciera(vproceso,v_agno,55,fnGetValorCampoTabla(vproceso,idtabla,'actnocte',nuReg));
+					  prc_guardarInfFinanciera(vproceso,v_agno,4,fnGetValorCampoTabla(vproceso,idtabla,'acttot',nuReg));
+					  prc_guardarInfFinanciera(vproceso,v_agno,5,fnGetValorCampoTabla(vproceso,idtabla,'pascte',nuReg));
+					  prc_guardarInfFinanciera(vproceso,v_agno,6,fnGetValorCampoTabla(vproceso,idtabla,'pasnocte',nuReg));
+					  prc_guardarInfFinanciera(vproceso,v_agno,7,fnGetValorCampoTabla(vproceso,idtabla,'pastot',nuReg));
+					  prc_guardarInfFinanciera(vproceso,v_agno,8,fnGetValorCampoTabla(vproceso,idtabla,'patnet',nuReg));
+					  prc_guardarInfFinanciera(vproceso,v_agno,9,fnGetValorCampoTabla(vproceso,idtabla,'paspat',nuReg));
+					  prc_guardarInfFinanciera(vproceso,v_agno,56,fnGetValorCampoTabla(vproceso,idtabla,'balsoc',nuReg));
+					  prc_guardarInfFinanciera(vproceso,v_agno,10,fnGetValorCampoTabla(vproceso,idtabla,'ingope',nuReg));
+					  --prc_guardarInfFinanciera(vproceso,v_agno,0,fnGetValorCampoTabla(vproceso,idtabla,'ingnoope',nuReg));
+					  prc_guardarInfFinanciera(vproceso,v_agno,11,fnGetValorCampoTabla(vproceso,idtabla,'cosven',nuReg));
+					  prc_guardarInfFinanciera(vproceso,v_agno,13,fnGetValorCampoTabla(vproceso,idtabla,'gasope',nuReg));
+					  prc_guardarInfFinanciera(vproceso,v_agno,51,fnGetValorCampoTabla(vproceso,idtabla,'gasnoope',nuReg));
+					  prc_guardarInfFinanciera(vproceso,v_agno,57,fnGetValorCampoTabla(vproceso,idtabla,'gasimp',nuReg));
+					  prc_guardarInfFinanciera(vproceso,v_agno,20,fnGetValorCampoTabla(vproceso,idtabla,'utiope',nuReg));
+					  prc_guardarInfFinanciera(vproceso,v_agno,28,fnGetValorCampoTabla(vproceso,idtabla,'utinet',nuReg));
+  
+
+						
+				nuReg := nuReg +1 ;
+			end loop;
+		
+	end if;
+	
+	if(vnombreproceso  = 'PRRMVINCULOS') Then
+			
+			--procedmiento llena la tablas PRRMVINCULOS
+			nuReg := 1;
+			
+			
+			
+			--recorro la itreacion de los registros de una tabla 1 a n registros. 
+			for rgdatos1 in 1 .. registrostabla loop
+				
+				
+				prc_guardarVinculos
+				(
+				vproceso,
+				fnGetValorCampoTabla(vproceso,idtabla,'tipovinculo',nuReg),
+				fnGetValorCampoTabla(vproceso,idtabla,'idtipoidentificacion',nuReg),
+				fnGetValorCampoTabla(vproceso,idtabla,'identificacion',nuReg),
+				fnGetValorCampoTabla(vproceso,idtabla,'nombre_razon_social',nuReg),
+				fnGetValorCampoTabla(vproceso,idtabla,'ape1',nuReg),
+				fnGetValorCampoTabla(vproceso,idtabla,'ape2',nuReg),
+				fnGetValorCampoTabla(vproceso,idtabla,'nom1',nuReg),
+				fnGetValorCampoTabla(vproceso,idtabla,'nom2',nuReg),
+				fnGetValorCampoTabla(vproceso,idtabla,'fechanacimiento',nuReg),
+				fnGetValorCampoTabla(vproceso,idtabla,'fechaexpdoc',nuReg),
+				fnGetValorCampoTabla(vproceso,idtabla,'cargo',nuReg),
+				fnGetValorCampoTabla(vproceso,idtabla,'renglon',nuReg),
+				fnGetValorCampoTabla(vproceso,idtabla,'nitrepresenta',nuReg),
+				fnGetValorCampoTabla(vproceso,idtabla,'libroregistro',nuReg),
+				fnGetValorCampoTabla(vproceso,idtabla,'numeroregistro',nuReg),
+				fnGetValorCampoTabla(vproceso,idtabla,'dupliregistro',nuReg),
+				fnGetValorCampoTabla(vproceso,idtabla,'fecharegistro',nuReg),
+				fnGetValorCampoTabla(vproceso,idtabla,'numerocuotas',nuReg),
+				fnGetValorCampoTabla(vproceso,idtabla,'valorcuotas',nuReg),
+				fnGetValorCampoTabla(vproceso,idtabla,'apolab',nuReg),
+				fnGetValorCampoTabla(vproceso,idtabla,'apolabadi',nuReg),
+				fnGetValorCampoTabla(vproceso,idtabla,'apoact',nuReg),
+				fnGetValorCampoTabla(vproceso,idtabla,'apodin',nuReg)
+				);
+						
+				nuReg := nuReg +1 ;
+			end loop;
+		
+	end if;
+	
+	if(vnombreproceso  = 'PRRMCAPITALES') Then
+			
+			--procedmiento llena la tablas PRRMCAPITALES
+			nuReg := 1;
+			
+			
+			
+			--recorro la itreacion de los registros de una tabla 1 a n registros. 
+			for rgdatos1 in 1 .. registrostabla loop
+				
+				NULL;
+				nuReg := nuReg +1 ;
+			end loop;
+		
+	end if;
+	
+	if(vnombreproceso  = 'PRRMEMBARGOS') Then
+			
+			--procedmiento llena la tablas PRRMEMBARGOS
+			nuReg := 1;
+			
+			
+			
+			--recorro la itreacion de los registros de una tabla 1 a n registros. 
+			for rgdatos1 in 1 .. registrostabla loop
+				
+				null;
+						
+				nuReg := nuReg +1 ;
+			end loop;
+		
+	end if;
+	
+	if(vnombreproceso  = 'PRRMLIBRO') Then
+			
+			--procedmiento llena la tablas PRRMLIBRO
+			nuReg := 1;
+			
+			nliq := 0;
+			
+		   select valor + 1
+		   into nliq
+		   from secuencias_control
+		   where codigo = 5;
+
+			
+			--recorro la itreacion de los registros de una tabla 1 a n registros. 
+			for rgdatos1 in 1 .. registrostabla loop
+				
+				
+				prc_guardarLibrosComerciales(vproceso,
+				             nliq,
+							 nuReg,
+                             fnGetValorCampoTabla(vproceso,idtabla,'libroregistro',nuReg),
+                             fnGetValorCampoTabla(vproceso,idtabla,'numeroregistro',nuReg),
+                             fnGetValorCampoTabla(vproceso,idtabla,'fecharegistro',nuReg),
+                             fnGetValorCampoTabla(vproceso,idtabla,'codigolibro',nuReg),
+                             fnGetValorCampoTabla(vproceso,idtabla,'paginainicial',nuReg),
+                             fnGetValorCampoTabla(vproceso,idtabla,'totalpaginas',nuReg) 
+                 );
+				
+				nuReg := nuReg +1 ;
+			end loop;
+			
+			
+			
+			update secuencias_control set valor  =  nliq	   where codigo = 5;
+			
+			
+	end if;
 	
 
 end llenarDatosProcedimiento;
@@ -1693,7 +1980,7 @@ procedure guardarSituacionesControl
 
 
 
-cursor cuDatos  is select NOMBRE_CIUDAD from ciudades  where ciudad = ID_DOMICILIO;
+ cursor cuDatos  is select NOMBRE_CIUDAD from ciudades  where ciudad = ID_DOMICILIO;
 
 
 	P_REGISTRO number;
@@ -1707,7 +1994,7 @@ cursor cuDatos  is select NOMBRE_CIUDAD from ciudades  where ciudad = ID_DOMICIL
    
   
    -- Se consulta el número de registro asociado al proponente que se carga
-SELECT nro_proponente into P_REGISTRO FROM CD_JSON_CARGUE WHERE ID = vproceso;
+  SELECT nro_proponente into P_REGISTRO FROM CD_JSON_CARGUE WHERE ID = vproceso;
  
  
  
@@ -1740,5 +2027,408 @@ VALUES
  
 END guardarSituacionesControl;
 
+
+-------INFORMACIÓN FINANCIERA
+
+PROCEDURE prc_guardarInfFinanciera(
+     v_proceso NUMBER,
+     P_anodatos varchar2,
+     P_tipo varchar2,
+     P_valor varchar2) as 
+	 
+	 P_MATRICULA number(15);
+	 
+ BEGIN 
+    -- traer numero matricula.
+	select MATRICULA into P_MATRICULA  FROM CD_JSON_CARGUE WHERE ID = v_proceso;
+	
+    
+    INSERT INTO INFORM_FINANCIERA_INSCRITOS
+    (
+	   MATRICULA,
+      CAMARA,
+      ANO,
+      TIPO_VALOR,
+      VALOR
+    ) 
+    values(
+	   P_MATRICULA,
+	   5,
+       P_anodatos,
+       P_tipo,
+       P_valor 
+    ); 
+ END prc_guardarInfFinanciera; 
+ 
+ 
+ 
+ 
+ --********************VINCULOS
+procedure prc_guardarVinculos
+(
+     v_proceso NUMBER,
+     P_tipovinculo varchar2,
+     P_idtipoidentificacion varchar2,
+     P_identificacion varchar2,
+     P_nombre_razon_social varchar2,
+     P_ape1 varchar2,
+     P_ape2 varchar2,
+     P_nom1 varchar2,
+     P_nom2 varchar2,
+     P_fechanacimiento varchar2,
+     P_fechaexpdoc varchar2,
+     P_cargo varchar2,
+     P_renglon varchar2,
+     P_nitrepresenta varchar2,
+     P_libroregistro varchar2,
+     P_numeroregistro varchar2,
+     P_dupliregistro varchar2,
+     P_fecharegistro varchar2,
+     P_numerocuotas varchar2,
+     P_valorcuotas varchar2,
+     P_apolab varchar2,
+     P_apolabadi varchar2,
+     P_apoact varchar2,
+     P_apodin varchar2
+     ) as
+	 
+	 V_MATRICULA number(15);
+BEGIN
+
+	   -- traer numero matricula.
+	select MATRICULA into V_MATRICULA  FROM CD_JSON_CARGUE WHERE ID = v_proceso;
+	
+	
+  IF P_tipovinculo='01' OR P_tipovinculo='02' THEN
+      insert into REPRESENTANTES_LEGALES (
+        MATRICULA,
+        CAMARA,
+        TIPO_IDENTIFICACION,
+        NRO_IDENTIFICACION,
+        NOMBRE_REPRESENTANTE,
+        ESTADO,
+        FECHA_DOCUMENTO,
+        TIPO_REPRESENTANTE,
+        SW_REPRESENTACION,
+        ORDEN,
+        LIBRO,
+        INSCRIPCION,
+        FECHA_INSERCION
+       
+      )
+      values(
+         V_MATRICULA,
+         5,
+         (SELECT ti.CODIGO_LOCAL FROM BAS_CLASES_IDENTIFICACION ti WHERE ti.CODIGO_RUE=P_idtipoidentificacion AND ROWNUM=1),
+         P_identificacion,
+         P_nombre_razon_social,
+         0,
+         TO_DATE(P_fechaexpdoc,'YYYYMMDD'),
+         nvl(
+				(SELECT TIPO_REPRESENTANTE FROM TIPOS_REPRESENTANTES tr WHERE tr.NOMBRE_TIPO_REPRES LIKE(upper('%'||P_cargo||'%')) AND ROWNUM=1
+			),38), --ENVIO EL 38 PARA QUE QUEDE GENÉRICO DADO QUE LO QUE SE RECIBE ES UN TEXTO
+         1,
+         P_renglon,
+         P_libroregistro,
+         P_numeroregistro,
+         TO_DATE(P_fecharegistro,'YYYYMMDD')
+       );
+  END IF;
+   IF P_tipovinculo='03' THEN--SOCIOS
+     INSERT INTO SOCIOS
+     (
+        MATRICULA,
+        CAMARA,
+        IDENTIFICACION,
+        TIPO_IDENTIFICACION,
+        TIPO_SOCIO,
+        CUOTAS,
+        APORTE,
+        MATRICULA_PROPIA,
+        SECUENCIA_SOC,
+        PAIS_DOC_IDENTIDAD,
+        SW_SOCIO_UNICO,
+        SW_SOCIO_CONTROLANTE
+     )
+     VALUES
+     (
+        V_MATRICULA,
+        5,
+        P_identificacion,
+        (SELECT ti.CODIGO_LOCAL FROM BAS_CLASES_IDENTIFICACION ti WHERE ti.CODIGO_RUE=P_idtipoidentificacion AND ROWNUM=1),
+        nvl((
+		SELECT TIPO_SOCIO FROM TIPOS_SOCIOS ts WHERE ts.NOMBRE_TIPO LIKE(upper('%'||P_cargo||'%')) AND ROWNUM=1
+			),0), --ENVIO EL 0 PARA QUE QUEDE GENÉRICO DADO QUE LO QUE SE RECIBE ES UN TEXTO TIPO_SOCIO,
+        TO_NUMBER(P_numerocuotas),
+        TO_NUMBER(P_valorcuotas),
+        NULL,
+        P_renglon,
+        NULL,
+        NULL,
+        NULL
+     );
+   END IF;
+   
+    IF P_tipovinculo='04' OR  P_tipovinculo='05' THEN--REVISOR FISCAL
+     INSERT INTO REVISORES_FISCALES
+     (
+        MATRICULA,
+        CAMARA,
+        FECHA_DOCUMENTO,
+        NRO_IDENTIFICACION,
+        TIPO_IDENTIFICACION,
+        TIPO_CARGO,
+        NOMBRE_RAZON_SOCIAL,
+        ESTADO,
+        INSCRIPCION,
+        LIBRO,
+        TIPO_LIBRO,
+        TARJETA_PROFESIONAL,
+        NIT_EMPRESA,
+        DIGITO_EMPRESA,
+        RAZON_SOCIAL_EMPRESA,
+        ORDEN
+     )
+     VALUES
+     (
+        V_MATRICULA,
+        5,
+        TO_DATE(P_fechaexpdoc,'YYYYMMDD'),
+        P_identificacion,
+        (SELECT ti.CODIGO_LOCAL FROM BAS_CLASES_IDENTIFICACION ti WHERE ti.CODIGO_RUE=P_idtipoidentificacion AND ROWNUM=1),
+        nvl((SELECT TIPO_CARGO FROM TIPOS_CARGOS_REVISOR_FISCAL tf WHERE tf.NOMBRE_TIPO_CARGO LIKE(upper('%'||P_cargo||'%')) AND ROWNUM=1),0), --ENVIO EL 0 PARA QUE QUEDE GENÉRICO DADO QUE LO QUE SE RECIBE ES UN TEXTO TIPO_SOCIO, --YesTIPO_CARGO,
+        P_nombre_razon_social,
+        0,
+        P_numeroregistro,
+        P_libroregistro,
+        NULL,
+        NULL,
+        NULL,
+        NULL,
+        NULL,
+        P_renglon
+     );
+   
+    END IF;
+    IF P_tipovinculo='06' OR  P_tipovinculo='07' THEN--JUNTAS DIRECTIVAS
+   
+       INSERT INTO JUNTAS_DIRECTIVAS
+       (
+          MATRICULA,
+          CAMARA,
+          FECHA_DOCUMENTO,
+          NRO_IDENTIFICACION,
+          TIPO_IDENTIFICACION,
+          TIPO_MIEMBRO,
+          CARGO,
+          NOMBRE,
+          ESTADO,
+          INSCRIPCION,
+          LIBRO,
+          TIPO_LIBRO,
+          RENGLON,
+          PAIS_DOC_IDENTIDAD
+       )
+       VALUES
+       (
+          V_MATRICULA,
+          5,
+          TO_DATE(P_fechaexpdoc,'YYYYMMDD'),
+          P_identificacion,
+          (SELECT ti.CODIGO_LOCAL FROM BAS_CLASES_IDENTIFICACION ti WHERE ti.CODIGO_RUE=P_idtipoidentificacion AND ROWNUM=1),
+          0, --nvl((SELECT * FROM TIPOS_MIEMBROS_JUNTA tm WHERE tm.NOMBRE_TIPO LIKE(upper('%'||P_cargo||'%')) AND ROWNUM=1),0),
+          nvl((SELECT CARGO FROM CARGOS_JUNTAS_DIRECTIVAS tc WHERE tc.DESCRIPCION LIKE(upper('%'||P_cargo||'%')) AND ROWNUM=1),0),
+          P_nombre_razon_social,
+          0,
+          P_numeroregistro,
+          P_libroregistro,
+          NULL,
+          P_renglon,
+          NULL
+       );
+    END IF;
+ END prc_guardarVinculos;
+ 
+ 
+ --*****LIBROS MERCANTILES
+procedure prc_guardarLibrosComerciales(
+     v_proceso NUMBER,
+	 p_liquidacion number,
+	 p_secuencia number,
+     P_libroregistro varchar2,
+     P_numeroregistro varchar2,
+     P_fecharegistro varchar2,
+     P_codigolibro varchar2,
+     P_paginainicial varchar2,
+     P_totalpaginas varchar2 ) as 
+
+	 V_MATRICULA NUMBER(15);
+
+
+BEGIN 
+   -- traer numero matricula.
+  select MATRICULA into V_MATRICULA  FROM CD_JSON_CARGUE WHERE ID = v_proceso;
+
+  INSERT INTO IMPRESION_LIBROS_COMERCIALES
+    (LIQUIDACION,
+    SECUENCIA,
+    MATRICULA,
+    CAMARA,
+    libro,
+    inscripcion,
+    fecha_inscripcion,
+    codigo_libro,
+    pagina_inicial,
+    numero_hojas
+    ) values(
+         p_liquidacion, --????
+         p_secuencia, --???
+         V_MATRICULA,
+         5,
+         P_libroregistro,
+         P_numeroregistro,
+         TO_DATE(P_fecharegistro,'YYYYMMDD'),
+         P_codigolibro,
+         P_paginainicial,
+         P_totalpaginas
+         );
+         
+
+
+END prc_guardarLibrosComerciales; 
+
+ 
+
+
+procedure PR_GRABARINSCRITOS(
+	 v_proceso NUMBER,
+     P_sigla varchar2,
+     P_idtipoidentificacion varchar2,
+     P_identificacion varchar2,
+     P_idmunidoc varchar2,
+     P_fechaexpdoc varchar2,
+     P_nit varchar2,
+     P_nacionalidad varchar2,
+     P_genero varchar2,
+     P_Indicadorempresabic varchar2,
+     P_numidetribpaisorigen varchar2,
+     P_numidetribextranjeroep varchar2,
+     P_fechamatricula varchar2,
+     P_fecharenovacion varchar2,
+     P_fechavigencia varchar2,
+     P_fechacancelacion varchar2,
+     P_estadomatricula varchar2,
+     P_organizacion varchar2,
+     P_cantmujcdirect varchar2,
+     P_cantidadmujeresempleadas varchar2,
+     P_ctrbeneficioarticulo4 varchar2,
+     P_ctrcumplerequisitosley1780 varchar2,
+     P_ctrrenunciabeneficiosley1780 varchar2,
+	 
+	 
+         
+     P_ctraportante varchar2,
+     P_ctrtipoaportante varchar2,
+	 
+     P_tamanoempresa varchar2,
+     P_emprendedor28 varchar2,
+     P_pemprendedor28 varchar2,
+     P_empresafamiliar varchar2,
+     P_procesosinnovacion varchar2,
+     P_ctrubicacion varchar2,
+     P_ctrafiliacion varchar2 ) as
+	 
+	 V_MATRICULA NUMBER(15);
+BEGIN
+
+-- traer numero matricula.
+  select MATRICULA into V_MATRICULA  FROM CD_JSON_CARGUE WHERE ID = v_proceso;
+
+
+
+insert into INSCRITOS(
+matricula,
+camara,
+sigla,
+TIPO_IDENTIFICACION ,
+NRO_IDENTIFICACION,
+LUGAR_EXPEDICION_DOC,
+FECHA_EXPEDICION_DOC,
+NIT_PERSONA_NATURAL,
+PAIS_ORIGEN,
+genero,
+SW_BIC,
+NUMERO_ID_TRIBUTARIA_PAIS,
+NUMERO_TRI_EXTRANJERO_EP,
+FECHA_MATRICULA,
+FECHA_RENOVACION,
+FECHA_VIGENCIA,
+FECHA_CANCELACION,
+ESTADO,
+TIPO_JURIDICO,
+NRO_MUJERES_DIRECTIVA,
+NRO_EMPLEADOS_MUJERES,
+SW_ACOGE_BENEFICIO_LEY1429,
+SW_CUMPLO_BENEFICIO1780,
+SW_MANTENGO_CUMPLIM1780,
+SW_APORTANTE_SSPS,
+TIPO_APORTE_SSPS,
+CODIGO_EMPRESA_TAMANO,
+SW_MENOR_28_ANO,
+PORC_CAPITAL_SOCIAL_MENOR_28,
+SW_EMPRESA_FAMILIAR,
+SW_PROCESO_INNOVACION,
+UBICACION_EMPRESA,
+SW_AFILIADO,
+SW_RUES,
+SW_PROTECCION_DATO,
+DOMICILIO_SOCIEDAD,
+SW_JUEGO_AZAR,
+SW_EICE
+
+)
+values(
+       V_MATRICULA,
+	   5,
+       P_sigla,
+       P_idtipoidentificacion,
+       P_identificacion,
+       P_idmunidoc,
+       TO_DATE(P_fechaexpdoc,'YYYYMMDD'),
+       P_nit,
+       (SELECT PAIS FROM TB_PAIS WHERE  NACIONALIDAD=P_nacionalidad AND ROWNUM=1 ) ,
+       P_genero,
+       DECODE(P_Indicadorempresabic,1,1,NULL) ,
+       P_numidetribpaisorigen,
+       P_numidetribextranjeroep,
+       TO_DATE(P_fechamatricula,'YYYYMMDD'),
+       TO_DATE(P_fecharenovacion,'YYYYMMDD'),
+       TO_DATE(P_fechavigencia,'YYYYMMDD'),
+       TO_DATE(P_fechacancelacion,'YYYYMMDD'),
+       (SELECT e.CODIGO_LOCAL FROM BAS_ESTADOS_MATRICULA e WHERE e.CODIGO_RUE=P_estadomatricula AND ROWNUM=1 ),
+       (SELECT o.CODIGO_LOCAL FROM BAS_ORGANIZACIONES_JURIDICAS o WHERE  o.CODIGO_RUE=P_organizacion AND ROWNUM=1),
+       P_cantmujcdirect,
+       P_cantidadmujeresempleadas,
+       DECODE(P_ctrbeneficioarticulo4,'S',1,'0'),
+       DECODE(P_ctrcumplerequisitosley1780,'S',1,'0'),
+       DECODE(P_ctrrenunciabeneficiosley1780,'N',1,0),
+       DECODE(P_ctraportante,'S',1,'N'),
+       DECODE(P_ctrtipoaportante, 0,0,1,1,2,2,3,3,3,4) ,
+       DECODE(P_tamanoempresa,1, '01',2,'02',3,'03',4,'04',1) ,
+       DECODE(P_emprendedor28,'S',1,0),
+       P_pemprendedor28,
+       DECODE(P_empresafamiliar,'S',1,0),
+       DECODE(P_procesosinnovacion,'S',1,0),
+       DECODE(P_ctrubicacion,1,0, P_ctrubicacion),
+       DECODE(P_ctrafiliacion ,'S',1,0),
+	   0,
+	   0,
+	   68001,
+	   0,
+	   0
+
+  );
+ END PR_GRABARINSCRITOS;
+ 
 END PKG_CD_CAMBIO_DOM;
 /
